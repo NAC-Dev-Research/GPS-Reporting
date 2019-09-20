@@ -13,7 +13,10 @@ namespace GPSReporting.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using GPSReporting.Models;
-    
+    using GPSReporting.Models.RTNReports;
+
+
+
     public partial class MGPSAPIEntities : DbContext
     {
         public MGPSAPIEntities()
@@ -33,5 +36,6 @@ namespace GPSReporting.DAL
         public virtual DbSet<SpeedViolation_vw> SpeedViolation_vw { get; set; }
         public virtual DbSet<ExcessiveIdling_vw> ExcessiveIdling_vw { get; set; }
         public virtual DbSet<RTNVehicleList> RTNVehicleLists { get; set; }
+        public virtual DbSet<vw_RTNTripReportRaw> vw_RTNTripReportRaw { get; set; }
     }
 }

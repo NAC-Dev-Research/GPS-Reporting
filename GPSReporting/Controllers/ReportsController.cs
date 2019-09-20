@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using GPSReporting.Models;
+using GPSReporting.Models.RTNReports;
 using System.Drawing;
 using GPSReporting.DAL;
 using System.Threading.Tasks;
@@ -103,23 +104,25 @@ namespace GPSReporting.Controllers
                 viewModel.DateFROM = dateFrom;
                 viewModel.DateTO = dateTo;
 
-                viewModel._tripReportRaw.Clear();
-                Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTrips(dateFrom, dateTo, TripReportRawList));
-                Task.WaitAll(new[] { SortByLocation });
+                if (site.ToUpper() == "DMC")
+                {
+                    viewModel._tripReportRaw.Clear();
+                    Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTrips(dateFrom, dateTo, TripReportRawList));
+                    Task.WaitAll(new[] { SortByLocation });
+                }
+                else if (site.ToUpper() == "DMC")
+                {
+                    TripReportRawList.Clear();
+                    Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
+                    Task.WaitAll(new[] { SortByLocation });
+                    Session["RTNTripReportList"] = TripReportRawList;
+                }
 
                 viewModel.NoncompliantHighlights = new NonCompliantHighlights();
                 viewModel._excessiveIdlingList.Clear();
                 viewModel._excessiveIdlingListCopy.Clear();
                 viewModel._overSpeedingList.Clear();
                 viewModel._overSpeedingListCopy.Clear();
-
-                Task SortByIdlingViolations = Task.Factory.StartNew(() => IdentifyIdlingViolations(site));
-                Task SortBySpeedingViolations = Task.Factory.StartNew(() => IdentifySpeedingViolations(site));
-                Task.WaitAll(new[] { SortByIdlingViolations, SortBySpeedingViolations });
-
-                Task SortBySelectedTime = Task.Factory.StartNew(() => IdentifyTripsBySelectedTime(TripReportRawList));
-                Task.WaitAll(new[] { SortBySelectedTime });
-
                 viewModel._vehicleUsageList.Clear();
                 viewModel._usageByTimeRangeList.Clear();
                 viewModel._keyTripsList.Clear();
@@ -128,14 +131,31 @@ namespace GPSReporting.Controllers
                 viewModel._DMCVehicleNotUsedList.Clear();
                 viewModel.UsageHighlights = new VehicleUsageHighlights();
                 viewModel.KeyTripsHighlights = new KeyTripsHighlights();
+                
+                List<ExcessiveIdling_vw> IdlingListDB = db.ExcessiveIdling_vw.Where(s => s.ReportDateFrom >= viewModel.DateFROM && s.ReportDateFrom <= viewModel.DateTO && s.Site == "DMC").OrderBy(s => s.Header).ToList();
+                if (site == "RTN")
+                    IdlingListDB = db.ExcessiveIdling_vw.Where(s => s.ReportDateFrom >= viewModel.DateFROM && s.ReportDateFrom <= viewModel.DateTO && s.Site == "RTN").OrderBy(s => s.Header).ToList();
+                
+                List<SpeedViolation_vw> SpeedingListDB = db.SpeedViolation_vw.Where(s => s.ReportDateFrom >= viewModel.DateFROM && s.ReportDateFrom <= viewModel.DateTO && s.Site == "DMC").OrderBy(s => s.PlateNumber).ToList();
+                if (site == "RTN")
+                    SpeedingListDB = db.SpeedViolation_vw.Where(s => s.ReportDateFrom >= viewModel.DateFROM && s.ReportDateFrom <= viewModel.DateTO && s.Site == "RTN").OrderBy(s => s.PlateNumber).ToList();
 
-                Task SortByVehicleNo = Task.Factory.StartNew(() => IdentifyVehicleUsage(dateFrom, dateTo, TripReportRawList));
-                Task SortByTimeRange = Task.Factory.StartNew(() => IdentifyUsageByTimeRange(TripReportRawList));
-                Task.WaitAll(new[] { SortByVehicleNo, SortByTimeRange });
+                Task SortByIdlingViolations = Task.Factory.StartNew(() => IdentifyIdlingViolations(site, IdlingListDB));
+                Task SortBySpeedingViolations = Task.Factory.StartNew(() => IdentifySpeedingViolations(site, SpeedingListDB));
+                Task.WaitAll(new[] { SortByIdlingViolations, SortBySpeedingViolations });
 
-                Task SortByKeyTrips = Task.Factory.StartNew(() => IdentifyKeyTrips());
-                Task.WaitAll(new[] { SortByKeyTrips });
+                if (site.ToUpper() == "DMC")
+                {
+                    Task SortBySelectedTime = Task.Factory.StartNew(() => IdentifyTripsBySelectedTime(TripReportRawList));
+                    Task.WaitAll(new[] { SortBySelectedTime });
+                    
+                    Task SortByVehicleNo = Task.Factory.StartNew(() => IdentifyVehicleUsage(dateFrom, dateTo, TripReportRawList));
+                    Task SortByTimeRange = Task.Factory.StartNew(() => IdentifyUsageByTimeRange(TripReportRawList));
+                    Task.WaitAll(new[] { SortByVehicleNo, SortByTimeRange });
 
+                    Task SortByKeyTrips = Task.Factory.StartNew(() => IdentifyKeyTrips());
+                    Task.WaitAll(new[] { SortByKeyTrips });
+                }
                 int NoOfDaysInBetween = ((TimeSpan)(dateTo - dateFrom)).Days;
                 ViewBag.ShowReport = "USAGE";
                 viewModel.DaysInBetween = NoOfDaysInBetween;

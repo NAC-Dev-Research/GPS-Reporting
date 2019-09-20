@@ -50,6 +50,7 @@
     <EntitySet Name="SpeedViolation_vw" EntityType="MGPSAPIModel.SpeedViolation_vw" />
     <EntitySet Name="ExcessiveIdling_vw" EntityType="MGPSAPIModel.ExcessiveIdling_vw" />
     <EntitySet Name="RTNVehicleLists" EntityType="MGPSAPIModel.RTNVehicleList" />
+    <EntitySet Name="vw_RTNTripReportRaw" EntityType="MGPSAPIModel.vw_RTNTripReportRaw" />
   </EntityContainer>
   <EntityType Name="LogList">
     <Key>
@@ -113,5 +114,28 @@
     <Property Name="VehicleModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="PlateNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="EquipmentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="vw_RTNTripReportRaw">
+    <Key>
+      <PropertyRef Name="TrackerID" />
+      <PropertyRef Name="EquipmentID" />
+    </Key>
+    <Property Name="TrackerID" Type="Int32" Nullable="false" />
+    <Property Name="EquipmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EquipmentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlateNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ReportDateFrom" Type="DateTime" Precision="3" />
+    <Property Name="ReportDateTo" Type="DateTime" Precision="3" />
+    <Property Name="AverageSpeed" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TripLength" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MaxSpeed" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TravelTime" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MovementStart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MovementEnd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StopTimeFormat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StopDuration" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IdleTimeFormat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IdleDuration" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
 </Schema>

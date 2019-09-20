@@ -32,6 +32,7 @@ namespace GPSReporting.Models
         public string ReportDate { get; set; }
         public string EquipmentNo { get; set; }
         public string AssignedDriver { get; set; }
+        public string EquipmentType { get; set; }
         public string OBTripNo { get; set; }
         public string TripName { get; set; }
         public string StartLocation { get; set; }

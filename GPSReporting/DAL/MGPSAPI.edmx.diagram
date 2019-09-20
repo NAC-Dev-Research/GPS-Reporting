@@ -7,11 +7,12 @@
       <Diagram DiagramId="c09fbe2136004c4587bda7f6bf2e8796" Name="Diagram1">
         <EntityTypeShape EntityType="MGPSAPIModel.DMCVehicleList" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MGPSAPIModel.UserList" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MGPSAPIModel.TripReportRaw_vw" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MGPSAPIModel.TripReportRaw_vw" Width="1.75" PointX="2.75" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MGPSAPIModel.LogList" Width="1.5" PointX="5.375" PointY="5.75" />
         <EntityTypeShape EntityType="MGPSAPIModel.SpeedViolation_vw" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="MGPSAPIModel.ExcessiveIdling_vw" Width="1.5" PointX="5.125" PointY="0.75" />
         <EntityTypeShape EntityType="MGPSAPIModel.RTNVehicleList" Width="1.5" PointX="0.5" PointY="4.375" />
+        <EntityTypeShape EntityType="MGPSAPIModel.vw_RTNTripReportRaw" Width="1.5" PointX="7.625" PointY="5.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

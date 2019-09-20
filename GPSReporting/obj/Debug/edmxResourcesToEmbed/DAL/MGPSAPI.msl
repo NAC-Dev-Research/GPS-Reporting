@@ -110,5 +110,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="vw_RTNTripReportRaw">
+      <EntityTypeMapping TypeName="MGPSAPIModel.vw_RTNTripReportRaw">
+        <MappingFragment StoreEntitySet="vw_RTNTripReportRaw">
+          <ScalarProperty Name="IdleDuration" ColumnName="IdleDuration" />
+          <ScalarProperty Name="IdleTimeFormat" ColumnName="IdleTimeFormat" />
+          <ScalarProperty Name="StopDuration" ColumnName="StopDuration" />
+          <ScalarProperty Name="StopTimeFormat" ColumnName="StopTimeFormat" />
+          <ScalarProperty Name="MovementEnd" ColumnName="MovementEnd" />
+          <ScalarProperty Name="MovementStart" ColumnName="MovementStart" />
+          <ScalarProperty Name="TravelTime" ColumnName="TravelTime" />
+          <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
+          <ScalarProperty Name="TripLength" ColumnName="TripLength" />
+          <ScalarProperty Name="AverageSpeed" ColumnName="AverageSpeed" />
+          <ScalarProperty Name="ReportDateTo" ColumnName="ReportDateTo" />
+          <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+          <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+          <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+          <ScalarProperty Name="EquipmentType" ColumnName="EquipmentType" />
+          <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+          <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

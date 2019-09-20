@@ -111,6 +111,31 @@ warning 6002: The table/view 'MGPSAPI.dbo.TripReportRaw_vw' does not have a prim
     <Property Name="IdleDuration" Type="decimal" Precision="18" Scale="2" />
     <Property Name="OdometerValue" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'MGPSAPI.dbo.vw_RTNTripReportRaw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_RTNTripReportRaw">
+    <Key>
+      <PropertyRef Name="TrackerID" />
+      <PropertyRef Name="EquipmentID" />
+    </Key>
+    <Property Name="TrackerID" Type="int" Nullable="false" />
+    <Property Name="EquipmentID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EquipmentType" Type="nvarchar" MaxLength="50" />
+    <Property Name="VehicleModel" Type="nvarchar" MaxLength="100" />
+    <Property Name="PlateNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ReportDateFrom" Type="datetime" />
+    <Property Name="ReportDateTo" Type="datetime" />
+    <Property Name="AverageSpeed" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TripLength" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MaxSpeed" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TravelTime" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="MovementStart" Type="nvarchar(max)" />
+    <Property Name="MovementEnd" Type="nvarchar(max)" />
+    <Property Name="StopTimeFormat" Type="nvarchar" MaxLength="10" />
+    <Property Name="StopDuration" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IdleTimeFormat" Type="nvarchar" MaxLength="10" />
+    <Property Name="IdleDuration" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
   <EntityContainer Name="MGPSAPIModelStoreContainer">
     <EntitySet Name="DMCVehicleList" EntityType="Self.DMCVehicleList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LogList" EntityType="Self.LogList" Schema="dbo" store:Type="Tables" />
@@ -167,6 +192,27 @@ warning 6002: The table/view 'MGPSAPI.dbo.TripReportRaw_vw' does not have a prim
     [TripReportRaw_vw].[IdleDuration] AS [IdleDuration], 
     [TripReportRaw_vw].[OdometerValue] AS [OdometerValue]
     FROM [dbo].[TripReportRaw_vw] AS [TripReportRaw_vw]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_RTNTripReportRaw" EntityType="Self.vw_RTNTripReportRaw" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_RTNTripReportRaw].[TrackerID] AS [TrackerID], 
+    [vw_RTNTripReportRaw].[EquipmentID] AS [EquipmentID], 
+    [vw_RTNTripReportRaw].[EquipmentType] AS [EquipmentType], 
+    [vw_RTNTripReportRaw].[VehicleModel] AS [VehicleModel], 
+    [vw_RTNTripReportRaw].[PlateNumber] AS [PlateNumber], 
+    [vw_RTNTripReportRaw].[ReportDateFrom] AS [ReportDateFrom], 
+    [vw_RTNTripReportRaw].[ReportDateTo] AS [ReportDateTo], 
+    [vw_RTNTripReportRaw].[AverageSpeed] AS [AverageSpeed], 
+    [vw_RTNTripReportRaw].[TripLength] AS [TripLength], 
+    [vw_RTNTripReportRaw].[MaxSpeed] AS [MaxSpeed], 
+    [vw_RTNTripReportRaw].[TravelTime] AS [TravelTime], 
+    [vw_RTNTripReportRaw].[MovementStart] AS [MovementStart], 
+    [vw_RTNTripReportRaw].[MovementEnd] AS [MovementEnd], 
+    [vw_RTNTripReportRaw].[StopTimeFormat] AS [StopTimeFormat], 
+    [vw_RTNTripReportRaw].[StopDuration] AS [StopDuration], 
+    [vw_RTNTripReportRaw].[IdleTimeFormat] AS [IdleTimeFormat], 
+    [vw_RTNTripReportRaw].[IdleDuration] AS [IdleDuration]
+    FROM [dbo].[vw_RTNTripReportRaw] AS [vw_RTNTripReportRaw]</DefiningQuery>
     </EntitySet>
   </EntityContainer>
 </Schema>

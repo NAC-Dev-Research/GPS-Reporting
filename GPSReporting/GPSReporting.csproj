@@ -147,6 +147,8 @@
     <Compile Include="Controllers\EntriesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ReportsFunctionController.cs" />
+    <Compile Include="Controllers\RTNReportsController.cs" />
+    <Compile Include="Controllers\RTNReportsFunctionController.cs" />
     <Compile Include="DAL\MGPSAPI.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -165,6 +167,7 @@
     <Compile Include="Models\GeofenceTrafficAssessment.cs" />
     <Compile Include="Models\LogList.cs" />
     <Compile Include="Models\ReportsViewModel.cs" />
+    <Compile Include="Models\RTNReports\vw_RTNTripReportRaw.cs" />
     <Compile Include="Models\RTNVehicleList.cs" />
     <Compile Include="Models\SMRMonitoring.cs" />
     <Compile Include="Models\SpeedViolation_vw.cs" />
@@ -251,6 +254,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ReportsFunction\" />
+    <Folder Include="Views\RTNReportsFunction\" />
+    <Folder Include="Views\RTNReports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
