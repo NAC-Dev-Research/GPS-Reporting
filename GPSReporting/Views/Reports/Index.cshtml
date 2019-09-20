@@ -1,0 +1,162 @@
+﻿@model GPSReporting.Models.ReportsViewModel
+
+<br />
+<br />
+
+<div class="container-fluid" style="width:100%" align="center">
+
+    <div class="submit-progress" id="progressBar" style="opacity:0">
+        <i class="fa fa-circle-o-notch fa-spin fa-lg" id="spinner" style="font-size:24px; color:white;"></i>
+        <label><span style="color:black">ii</span>Please wait while we collect data from the server and generate your report.</label>
+    </div>
+    <br />
+    <strong class="card-text" id="header1" style="font-weight:600; font-size:4rem; color:black">QUERY PAGE</strong>
+    <hr id="header2" style="background-color:black; height:0.1rem; width:30%; margin-top:-0.5rem; margin-bottom:0.5rem" />
+    <strong class="card-text" id="header3" style="font-weight:400; font-size:1rem; color:black">Kindly select report date and time range</strong>
+    <br />
+    @*<strong class="card-text" style="font-weight:400; font-size:1rem; color:black">@Session["user"].ToString()</strong>*@
+    @*<strong class="card-text" style="font-weight:400; font-size:1rem; color:darkgreen">@ViewBag.CurrentUser</strong>*@
+
+    @{
+        if (ViewBag.Continue == "TRUE") {
+            <br /><br /><br />
+        }
+        if (ViewBag.Continue == "FALSE") {
+            <br /><br /><strong class="card-text" style="font-weight:400; font-size:1rem; color:red">Selected date range has no data. Kindly select new date range.</strong>
+        }
+    }
+    @using (Html.BeginForm("Index", "Reports", FormMethod.Post))
+    {
+        //if (Session["user"].ToString() != "None")
+        //{
+            <div class="jumbotron" style="width:50%; height:60%; background-color:white; border:double" id="inputBox">
+                <br />
+                <div class="row">
+                    <div class="form-group" style="width:100%" align="center">
+                        <button class="btn" style="color:black" disabled>Start Date</button>
+                        <input type="date" class="form-control btn-outline-primary" style="width:10.2rem; display:inline;" value="@System.DateTime.Now.ToString("yyyy-MM-dd")" id="dateFrom" name="dateFrom" />
+                        <button class="btn" style="color:black" disabled>&nbsp;&nbsp;&nbsp; End Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        <input type="date" class="form-control btn-outline-primary" style="width:10.2rem; display:inline;" value="@System.DateTime.Now.ToString("yyyy-MM-dd")" id="dateTo" name="dateTo" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group" style="width:100%" align="center">
+                        <button class="btn" style="color:black" disabled>Start Time</button>
+                        <select class="form-control btn-outline-primary" name="startTime" id="startTime" style="width:10.2rem; text-align:center; display:inline;">
+                            <option id="startTime" style="background-color:white; color:black" value="0">00:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="1">01:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="2">02:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="3">03:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="4">04:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="5">05:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="6">06:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="7">07:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="8">08:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="9">09:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="10">10:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="11">11:00 AM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="12">12:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="13">13:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="14">14:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="15">15:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="16">16:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="17">17:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="18">18:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="19">19:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="20">20:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="21">21:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="22">22:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="23">23:00 PM</option>
+                            <option id="startTime" style="background-color:white; color:black" value="24">24:00 PM</option>
+                        </select>
+
+                        <button class="btn" style="color:black" disabled>&nbsp;&nbsp;&nbsp; End Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                        <select class="form-control btn-outline-primary" name="endTime" id="endTime" style="width:10.2rem; text-align:center; display:inline;">
+                            <option id="endTime" style="background-color:white; color:black" value="24">24:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="0">00:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="1">01:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="2">02:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="3">03:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="4">04:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="5">05:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="6">06:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="7">07:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="8">08:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="9">09:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="10">10:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="11">11:00 AM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="12">12:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="13">13:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="14">14:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="15">15:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="16">16:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="17">17:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="18">18:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="19">19:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="20">20:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="21">21:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="22">22:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="23">23:00 PM</option>
+                            <option id="endTime" style="background-color:white; color:black" value="24">24:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group" style="width:100%" align="center">
+                        <button class="btn" style="color:black" disabled>Mine Site &nbsp;&nbsp;&nbsp;</button>
+                        <select class="form-control btn-outline-primary" name="site" id="site" style="width:10.2rem; text-align:center; display:inline;">
+                            <option id="site" style="background-color:white; color:black" value="DMC">DMC</option>
+                            <option id="site" style="background-color:white; color:black" value="RTN">RTN</option>
+                        </select>
+
+                        <button class="btn" style="color:black" disabled>&nbsp;&nbsp; Vehicle Type &nbsp;</button>
+                        <select class="form-control btn-outline-primary" name="vehicleType" id="vehicleType" style="width:10.2rem; text-align:center; display:inline;">
+                            <option id="vehicleType" style="background-color:white; color:black" value="Service Vehicle">Service Vehicle</option>
+                            <option id="vehicleType" style="background-color:white; color:black" value="Excavator">Excavator</option>
+                            <option id="vehicleType" style="background-color:white; color:black" value="Dump Truck">Dump Truck</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <div class="form-group" style="width:100%" align="center">
+                <div class="progress" id="loadingBar" name="loadingBar" style="width:50%">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                </div>
+                <strong class="card-text" style="font-weight:400; font-size:1rem; color:green" name="NoteWait" id="NoteWait">Please wait while we collect data from the server and generate your report.</strong>
+                <button class="btn btn-outline-success" style="width:10.2rem" id="showReport" name="showReport" value="YES" onclick="DisableButton()">Show Report</button>
+                <br /><br /><br />
+            </div>
+        //}
+    }
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    function DisplayProgressMessage(ctl, msg) {
+        $(ctl).prop("disabled", true).text(msg);
+        $("body").addClass("submit-progress-bg");
+        setTimeout(function () {
+            $(".submit-progress").removeClass("hidden");
+        }, 1);
+        return true;
+    }
+    function DisableButton() {
+        //DisplayProgressMessage();
+        $("#showReport").attr('hidden', 'hidden');
+        //$("#inputBox").attr('hidden', 'hidden');
+        //$("#header1").attr('hidden', 'hidden');
+        //$("#header2").attr('hidden', 'hidden');
+        //$("#header3").attr('hidden', 'hidden');
+        $("#NoteWait").show();
+        $("#loadingBar").show();
+        //$("#progressBar").animate({ opacity: 1.0 }, 800);
+    }
+    $(document).ready(function () {
+        $("#NoteWait").hide();
+        $("#loadingBar").hide();
+
+        if ($('#dateFrom').prop('type') !== 'date') $('#dateFrom').datepicker();
+        if ($('#dateTo').prop('type') !== 'date') $('#dateTo').datepicker();
+    });
+</script>

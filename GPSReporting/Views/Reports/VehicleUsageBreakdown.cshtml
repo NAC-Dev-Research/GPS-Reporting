@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<GPSReporting.Models.TripsReportRaw>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<br />
+<br />
+
+<div class="container-fluid" style="width:100%" align="right">
+    @using (Html.BeginForm("VehicleUsageBreakdown", "Reports", FormMethod.Post))
+    {
+        <button class="btn btn-outline-primary" name="backToMenu" value="Yes" align="right">Close [x]</button>
+    }
+</div>
+
+<br />
+<br />
+
+<p align="center"><strong><span style="font-size: 18pt">@ViewBag.PageTitle</span></strong></p>
+<table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+    <tbody>
+        <tr style="background-color: #e1f2d4">
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Date</strong></td>
+            <td style="text-align:center" width="11%" rowspan="1" colspan="1"><strong>Time, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="33%" rowspan="1" colspan="1"><strong>Start location</strong></td>
+            <td style="text-align:center" width="33%" rowspan="1" colspan="1"><strong>End location</strong></td>
+            <td style="text-align:center" width="7%" rowspan="1" colspan="1"><strong>Trip length, km</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Travel time, hh:mm:ss</strong></td>
+        </tr>
+        @{foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.ReportDate)</td>
+                    <td style="text-align:center">@item.StartTime - @item.EndTime</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.StartLocation)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.EndLocation)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripLength)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripDuration)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table><br />
+<div class="form-group" align="center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("VehicleUsageBreakdown", new {  page }))
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+    function GenerateExcel() {
+        window.open("/Reports/CreateExcel");
+    }
+</script>

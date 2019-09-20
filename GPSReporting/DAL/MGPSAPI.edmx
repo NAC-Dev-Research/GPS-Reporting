@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MGPSAPIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DMCVehicleList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrackerID" Type="nvarchar" MaxLength="50" />
+          <Property Name="PlateNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehicleModel" Type="nvarchar" MaxLength="50" />
+          <Property Name="EquipmentID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LogList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Day" Type="nvarchar" MaxLength="10" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Details" Type="nvarchar(max)" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Logout" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RTNVehicleList">
+          <Key>
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="TrackerID" Type="int" Nullable="false" />
+          <Property Name="EquipmentID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VehicleModel" Type="nvarchar" MaxLength="100" />
+          <Property Name="PlateNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="EquipmentType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="Site" Type="nvarchar" MaxLength="10" />
+          <Property Name="Role" Type="nvarchar" MaxLength="20" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MGPSAPI.dbo.ExcessiveIdling_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ExcessiveIdling_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TrackerID" Type="int" Nullable="false" />
+          <Property Name="Site" Type="nvarchar" MaxLength="10" />
+          <Property Name="ReportDateFrom" Type="datetime" />
+          <Property Name="Header" Type="nvarchar" MaxLength="10" />
+          <Property Name="TripTimeStart" Type="nvarchar" MaxLength="10" />
+          <Property Name="TripTimeEnd" Type="nvarchar" MaxLength="10" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="StopDuration" Type="nvarchar" MaxLength="10" />
+          <Property Name="StopDurationDec" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdlingDurationDec" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdlingDuration" Type="nvarchar" MaxLength="10" />
+          <Property Name="IdlingPercent" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MGPSAPI.dbo.SpeedViolation_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SpeedViolation_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TrackerID" Type="int" Nullable="false" />
+          <Property Name="Site" Type="nvarchar" MaxLength="10" />
+          <Property Name="PlateNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="VehicleModel" Type="nvarchar" MaxLength="50" />
+          <Property Name="EquipmentID" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReportDateFrom" Type="datetime" />
+          <Property Name="StartTime" Type="nvarchar" MaxLength="10" />
+          <Property Name="Duration" Type="nvarchar" MaxLength="10" />
+          <Property Name="DurationDec" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AverageSpeed" Type="int" />
+          <Property Name="MaxSpeed" Type="int" />
+          <Property Name="Address" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MGPSAPI.dbo.TripReportRaw_vw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TripReportRaw_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TrackerID" Type="int" Nullable="false" />
+          <Property Name="Header" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReportDateFrom" Type="datetime" />
+          <Property Name="AverageSpeed" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TripLength" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TravelTime" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="StartLocation" Type="nvarchar(max)" />
+          <Property Name="EndLocation" Type="nvarchar(max)" />
+          <Property Name="StopTimeFormat" Type="nvarchar" MaxLength="10" />
+          <Property Name="StopDuration" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdleTimeFormat" Type="nvarchar" MaxLength="10" />
+          <Property Name="IdleDuration" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OdometerValue" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="MGPSAPIModelStoreContainer">
+          <EntitySet Name="DMCVehicleList" EntityType="Self.DMCVehicleList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogList" EntityType="Self.LogList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RTNVehicleList" EntityType="Self.RTNVehicleList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserList" EntityType="Self.UserList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExcessiveIdling_vw" EntityType="Self.ExcessiveIdling_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ExcessiveIdling_vw].[ID] AS [ID], 
+    [ExcessiveIdling_vw].[TrackerID] AS [TrackerID], 
+    [ExcessiveIdling_vw].[Site] AS [Site], 
+    [ExcessiveIdling_vw].[ReportDateFrom] AS [ReportDateFrom], 
+    [ExcessiveIdling_vw].[Header] AS [Header], 
+    [ExcessiveIdling_vw].[TripTimeStart] AS [TripTimeStart], 
+    [ExcessiveIdling_vw].[TripTimeEnd] AS [TripTimeEnd], 
+    [ExcessiveIdling_vw].[Address] AS [Address], 
+    [ExcessiveIdling_vw].[StopDuration] AS [StopDuration], 
+    [ExcessiveIdling_vw].[StopDurationDec] AS [StopDurationDec], 
+    [ExcessiveIdling_vw].[IdlingDurationDec] AS [IdlingDurationDec], 
+    [ExcessiveIdling_vw].[IdlingDuration] AS [IdlingDuration], 
+    [ExcessiveIdling_vw].[IdlingPercent] AS [IdlingPercent]
+    FROM [dbo].[ExcessiveIdling_vw] AS [ExcessiveIdling_vw]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SpeedViolation_vw" EntityType="Self.SpeedViolation_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SpeedViolation_vw].[ID] AS [ID], 
+    [SpeedViolation_vw].[TrackerID] AS [TrackerID], 
+    [SpeedViolation_vw].[Site] AS [Site], 
+    [SpeedViolation_vw].[PlateNumber] AS [PlateNumber], 
+    [SpeedViolation_vw].[VehicleModel] AS [VehicleModel], 
+    [SpeedViolation_vw].[EquipmentID] AS [EquipmentID], 
+    [SpeedViolation_vw].[ReportDateFrom] AS [ReportDateFrom], 
+    [SpeedViolation_vw].[StartTime] AS [StartTime], 
+    [SpeedViolation_vw].[Duration] AS [Duration], 
+    [SpeedViolation_vw].[DurationDec] AS [DurationDec], 
+    [SpeedViolation_vw].[AverageSpeed] AS [AverageSpeed], 
+    [SpeedViolation_vw].[MaxSpeed] AS [MaxSpeed], 
+    [SpeedViolation_vw].[Address] AS [Address]
+    FROM [dbo].[SpeedViolation_vw] AS [SpeedViolation_vw]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TripReportRaw_vw" EntityType="Self.TripReportRaw_vw" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TripReportRaw_vw].[ID] AS [ID], 
+    [TripReportRaw_vw].[TrackerID] AS [TrackerID], 
+    [TripReportRaw_vw].[Header] AS [Header], 
+    [TripReportRaw_vw].[ReportDateFrom] AS [ReportDateFrom], 
+    [TripReportRaw_vw].[AverageSpeed] AS [AverageSpeed], 
+    [TripReportRaw_vw].[TripLength] AS [TripLength], 
+    [TripReportRaw_vw].[TravelTime] AS [TravelTime], 
+    [TripReportRaw_vw].[StartLocation] AS [StartLocation], 
+    [TripReportRaw_vw].[EndLocation] AS [EndLocation], 
+    [TripReportRaw_vw].[StopTimeFormat] AS [StopTimeFormat], 
+    [TripReportRaw_vw].[StopDuration] AS [StopDuration], 
+    [TripReportRaw_vw].[IdleTimeFormat] AS [IdleTimeFormat], 
+    [TripReportRaw_vw].[IdleDuration] AS [IdleDuration], 
+    [TripReportRaw_vw].[OdometerValue] AS [OdometerValue]
+    FROM [dbo].[TripReportRaw_vw] AS [TripReportRaw_vw]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MGPSAPIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DMCVehicleList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrackerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlateNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TripReportRaw_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TrackerID" Type="Int32" Nullable="false" />
+          <Property Name="Header" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReportDateFrom" Type="DateTime" Precision="3" />
+          <Property Name="AverageSpeed" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TripLength" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TravelTime" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="StartLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EndLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StopTimeFormat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StopDuration" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdleTimeFormat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IdleDuration" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OdometerValue" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityContainer Name="MGPSAPIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DMCVehicleLists" EntityType="Self.DMCVehicleList" />
+          <EntitySet Name="UserLists" EntityType="Self.UserList" />
+          <EntitySet Name="TripReportRaw_vw" EntityType="Self.TripReportRaw_vw" />
+          <EntitySet Name="LogLists" EntityType="MGPSAPIModel.LogList" />
+          <EntitySet Name="SpeedViolation_vw" EntityType="MGPSAPIModel.SpeedViolation_vw" />
+          <EntitySet Name="ExcessiveIdling_vw" EntityType="MGPSAPIModel.ExcessiveIdling_vw" />
+          <EntitySet Name="RTNVehicleLists" EntityType="MGPSAPIModel.RTNVehicleList" />
+        </EntityContainer>
+        <EntityType Name="LogList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Day" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Logout" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SpeedViolation_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TrackerID" Type="Int32" Nullable="false" />
+          <Property Name="Site" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PlateNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleModel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReportDateFrom" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DurationDec" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AverageSpeed" Type="Int32" />
+          <Property Name="MaxSpeed" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ExcessiveIdling_vw">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TrackerID" Type="Int32" Nullable="false" />
+          <Property Name="Site" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ReportDateFrom" Type="DateTime" Precision="3" />
+          <Property Name="Header" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TripTimeStart" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TripTimeEnd" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StopDuration" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StopDurationDec" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdlingDurationDec" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdlingDuration" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IdlingPercent" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RTNVehicleList">
+          <Key>
+            <PropertyRef Name="TrackerID" />
+          </Key>
+          <Property Name="TrackerID" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleModel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PlateNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EquipmentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MGPSAPIModelStoreContainer" CdmEntityContainer="MGPSAPIEntities">
+          <EntitySetMapping Name="DMCVehicleLists">
+            <EntityTypeMapping TypeName="MGPSAPIModel.DMCVehicleList">
+              <MappingFragment StoreEntitySet="DMCVehicleList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+                <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+                <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLists">
+            <EntityTypeMapping TypeName="MGPSAPIModel.UserList">
+              <MappingFragment StoreEntitySet="UserList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripReportRaw_vw">
+            <EntityTypeMapping TypeName="MGPSAPIModel.TripReportRaw_vw">
+              <MappingFragment StoreEntitySet="TripReportRaw_vw">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+                <ScalarProperty Name="AverageSpeed" ColumnName="AverageSpeed" />
+                <ScalarProperty Name="TripLength" ColumnName="TripLength" />
+                <ScalarProperty Name="TravelTime" ColumnName="TravelTime" />
+                <ScalarProperty Name="StartLocation" ColumnName="StartLocation" />
+                <ScalarProperty Name="EndLocation" ColumnName="EndLocation" />
+                <ScalarProperty Name="StopTimeFormat" ColumnName="StopTimeFormat" />
+                <ScalarProperty Name="StopDuration" ColumnName="StopDuration" />
+                <ScalarProperty Name="IdleTimeFormat" ColumnName="IdleTimeFormat" />
+                <ScalarProperty Name="IdleDuration" ColumnName="IdleDuration" />
+                <ScalarProperty Name="OdometerValue" ColumnName="OdometerValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogLists">
+            <EntityTypeMapping TypeName="MGPSAPIModel.LogList">
+              <MappingFragment StoreEntitySet="LogList">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Logout" ColumnName="Logout" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpeedViolation_vw">
+            <EntityTypeMapping TypeName="MGPSAPIModel.SpeedViolation_vw">
+              <MappingFragment StoreEntitySet="SpeedViolation_vw">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
+                <ScalarProperty Name="AverageSpeed" ColumnName="AverageSpeed" />
+                <ScalarProperty Name="DurationDec" ColumnName="DurationDec" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+                <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExcessiveIdling_vw">
+            <EntityTypeMapping TypeName="MGPSAPIModel.ExcessiveIdling_vw">
+              <MappingFragment StoreEntitySet="ExcessiveIdling_vw">
+                <ScalarProperty Name="IdlingPercent" ColumnName="IdlingPercent" />
+                <ScalarProperty Name="IdlingDuration" ColumnName="IdlingDuration" />
+                <ScalarProperty Name="IdlingDurationDec" ColumnName="IdlingDurationDec" />
+                <ScalarProperty Name="StopDurationDec" ColumnName="StopDurationDec" />
+                <ScalarProperty Name="StopDuration" ColumnName="StopDuration" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="TripTimeEnd" ColumnName="TripTimeEnd" />
+                <ScalarProperty Name="TripTimeStart" ColumnName="TripTimeStart" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RTNVehicleLists">
+            <EntityTypeMapping TypeName="MGPSAPIModel.RTNVehicleList">
+              <MappingFragment StoreEntitySet="RTNVehicleList">
+                <ScalarProperty Name="EquipmentType" ColumnName="EquipmentType" />
+                <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+                <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

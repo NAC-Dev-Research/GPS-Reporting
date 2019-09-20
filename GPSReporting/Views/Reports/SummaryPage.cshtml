@@ -1,0 +1,294 @@
+﻿@model GPSReporting.Models.ReportsViewModel
+
+<br />
+<br />
+
+<div class="jumbotron" style="width:100%; height:auto; background-color:white; border:hidden; border-top-color:white">
+    <div class="row" align="center">
+        <div class="form-group" style="width:25%" align="left">
+            @using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+            {
+                //if (Session["user"].ToString() != "None")
+                //{
+                <button class="btn btn-outline-primary" name="backToInput" value="YES">Back to query page</button>
+                <button class="btn btn-outline-primary" name="detailsWindow" value="YES">Details window</button>
+                //}
+            }
+        </div>
+        <div class="form-group" style="width:50%" align="center">
+            @using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+            {
+                //if (Session["user"].ToString() != "None")
+                //{
+                <button class="btn btn-primary" type="submit" name="reportType" value="USAGE">Vehicle Usage</button>
+                <button class="btn btn-primary" type="submit" name="reportType" value="KEYTRIPS">Frequently Performed Key Trips</button>
+                <button class="btn btn-primary" type="submit" name="reportType" value="EVENTS">Noncompliant Events</button>
+                //<button class="btn btn-outline-primary" type="submit" name="reportType" value="PRODUCTIVITY">Productivity</button>
+                //}
+            }
+        </div>
+        <div class="form-group" style="width:15%" align="center">
+        </div>
+        <div class="form-group" style="width:10%" align="center">
+            @using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+            {
+                <button class="btn btn-outline-danger" type="submit" name="logOut" value="YES">Log Out</button>
+            }
+        </div>
+    </div>
+    <br />
+    @{
+        if (Model._tripReportRaw != null)
+        {
+            if (Model.CurrentWindow == "USAGE")
+            {
+                <div class="container-fluid" style="width:100%" align="center">
+                    <div class="row" style="width:100%" align="center">
+                        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+                            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">VEHICLE USAGE</strong>
+                        </div>
+                    </div>
+                    <div class="form-group" style="width:99%; border:hidden; background-color:white;">
+                        <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">@ViewBag.ReportDateRange</strong>
+                    </div><br />
+                    <div class="row" style="width:100%" align="center">
+                        <div class="jumbotron" style="width:32%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                            <h5 style="font-weight:400; font-size:1.5vw; color:black">Vehicle with most trips</h5>
+                            <strong class="card-text" style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.UsageHighlights.VehicleMostTrips</strong>
+                            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.UsageHighlights.VehicleType</h4>
+                            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.UsageHighlights.VehicleNoOfTrips trip(s)</h4>
+                        </div>
+                        <div class="jumbotron" style="width:32%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                            <h5 style="font-weight:400; font-size:1.5vw; color:black">Time range with most vehicle deployed</h5>
+                            <strong style="font-weight:600; font-size:3.6vw; color:forestgreen; font-size-adjust:initial">@Model.UsageHighlights.TimeRangeMostVehicles</strong>
+                            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.UsageHighlights.TimeRangeNoOfVehicles vehicle(s)</h4>
+                        </div>
+                        <div class="jumbotron" style="width:32%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                            <h5 style="font-weight:400; font-size:1.5vw; color:black">Time range with most trips</h5>
+                            <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.UsageHighlights.TimeRangeMostTrips</strong>
+                            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.UsageHighlights.TimeRangeNoOfTrips trip(s)</h4>
+                        </div>
+                    </div>
+                    <br /><br />
+
+                    @if (ViewBag.ShowVehicleSummary != "YES")
+                    {
+                        using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+                        {
+                            <div class="row" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="vehicleSummary" value="YES">Show more details >></button></div>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+                        {
+                            <div class="row" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="hideVehicleSummary" value="YES">Show less details <<</button></div>
+                        }
+                    }
+                    <br />
+
+                    @if (ViewBag.ShowVehicleSummary == "YES")
+                    {
+                        <div class="container-fluid" style="width:100%" align="center">
+                            <div class="row" style="width:100%" align="center">
+                                <div class="jumbotron" style="width:20%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                                    <h5 style="font-weight:400; font-size:1.4vw; color:black">Total trips for the period</h5>
+                                    <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.UsageHighlights.TotalTrips.ToString("#,##0.###")</strong>
+                                    <h4 style="font-weight:600; font-size:1.55vw; color:steelblue">Average: @Model.UsageHighlights.AverageTrips.ToString("#,##0.###") trip(s)/day</h4>
+                                </div>
+                                <div class="jumbotron" style="width:24%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                                    <h5 style="font-weight:400; font-size:1.4vw; color:black">Total mileage for the period</h5>
+                                    <strong style="font-weight:600; font-size:3.6vw; color:forestgreen; font-size-adjust:initial">@Model.UsageHighlights.TotalMileage.ToString("#,##0") km</strong>
+                                    <h4 style="font-weight:600; font-size:1.6vw; color:steelblue">Average: @Model.UsageHighlights.AverageMileage.ToString("#,##0.###") km/day</h4>
+                                </div>
+                                <div class="jumbotron" style="width:24%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                                    <h5 style="font-weight:400; font-size:1.4vw; color:black">Total travel time for the period</h5>
+                                    <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.UsageHighlights.TotalTravelTime.ToString("#,##0.###") hr(s)</strong>
+                                    <h4 style="font-weight:600; font-size:1.6vw; color:steelblue">Average: @Model.UsageHighlights.AverageTravelTime.ToString("#,##0.###") hr/day</h4>
+                                </div>
+                                <div class="jumbotron" style="width:28%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                                    <h5 style="font-weight:400; font-size:1.4vw; color:black">Vehicles deployed for the period</h5>
+                                    <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.UsageHighlights.VehiclesUsed vehicle(s)</strong>
+                                    <h4 style="font-weight:600; font-size:1.6vw; color:steelblue">@Model.UsageHighlights.VehiclesNotUsed vehicle(s) not used</h4>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            if (Model.CurrentWindow == "KEYTRIPS")
+            {
+                <div class="container-fluid" style="width:100%" align="center">
+                    <div class="row" style="width:99%" align="center">
+                        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+                            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">FREQUENTLY PERFORMED KEY TRIPS</strong>
+                        </div>
+                    </div>
+                    <div class="form-group" style="width:99%; border:hidden; background-color:white;">
+                        <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">@ViewBag.ReportDateRange</strong>
+                    </div>
+
+                    <br />
+                    <div class="row" style="width:100%;" align="center">
+                        <div class="jumbotron" style="width:99%; border:hidden; background-color:white; border-top-color:white">
+                            <h5 style="font-weight:400; font-size:1.5vw; color:black;">Route with most trip count</h5>
+                            <strong class="card-text" style="font-weight:600; font-size:2.5vw; color:forestgreen">@Model.KeyTripsHighlights.RouteMostTrip</strong>
+                            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.KeyTripsHighlights.RouteNoOfTrip trip(s)</h4>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row" style="width:100%;" align="center">
+                        <div class="jumbotron" style="width:5%; border:hidden; background-color:white; border-top-color:white"></div>
+                        <div class="jumbotron" style="width:40%; border:hidden; background-color:white; border-top-color:white">
+                            <h5 style="font-weight:400; font-size:1.5vw; color:black;"> Average travel time</h5>
+                            <strong style="font-weight:600; font-size:3vw; color:forestgreen; font-size-adjust:initial">@Model.KeyTripsHighlights.AverageTravelTime</strong>
+                            <h4 style="font-weight:600; font-size:2vw; color:steelblue"></h4>
+                        </div>
+                        <div class="jumbotron" style="width:9%; border:hidden; background-color:white; border-top-color:white"></div>
+                        <div class="jumbotron" style="width:40%; border:hidden; background-color:white; border-top-color:white">
+                            <h5 style="font-weight:400; font-size:1.5vw; color:black;">Vehicle with most trips performed for this route</h5>
+                            <strong style="font-weight:600; font-size:3vw; color:forestgreen">@Model.KeyTripsHighlights.VehicleMostTrip</strong>
+                            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.KeyTripsHighlights.VehicleMostTripModel</h4>
+                            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.KeyTripsHighlights.VehicleNoOfTrip trip(s)</h4>
+                        </div>
+                        <div class="jumbotron" style="width:5%; border:hidden; background-color:white; border-top-color:white"></div>
+                    </div>
+
+                    @if (ViewBag.ShowKeyTripsSummary != "YES")
+                    {
+                        using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+                        {
+                            <div class="row" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="keyTripsSummary" value="YES">Show more details >></button></div>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+                        {
+                            <div class="row" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="hideKeyTripsSummary" value="YES">Show less details <<</button></div>
+                        }
+                    }
+                    <br />
+
+                    @if (ViewBag.ShowKeyTripsSummary == "YES")
+                    {
+                        <div class="row" style="width:100%;" align="center">
+                            <div class="jumbotron" style="width:5%; height:10vw; border:hidden; background-color:white; border-top-color:white"></div>
+                            <div class="jumbotron" style="width:40%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.5vw; color:black">Route with highest idling time</h5>
+                                <strong class="card-text" style="font-weight:600; font-size:2vw; color:forestgreen">@Model.KeyTripsHighlights.RouteMostIdling</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.KeyTripsHighlights.RouteIdlingTime</h4>
+                            </div>
+                            <div class="jumbotron" style="width:9%; height:10vw; border:hidden; background-color:white; border-top-color:white"></div>
+                            <div class="jumbotron" style="width:40%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.5vw; color:black">Vehicle with highest average idling time for this route</h5>
+                                <strong style="font-weight:600; font-size:3vw; color:forestgreen">@Model.KeyTripsHighlights.VehicleMostIdling</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.KeyTripsHighlights.VehicleMostIdlingModel</h4>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.KeyTripsHighlights.VehicleIdlingTime</h4>
+                            </div>
+                            <div class="jumbotron" style="width:5%; height:10vw; border:hidden; background-color:white; border-top-color:white"></div>
+                        </div>
+                    }
+                </div>
+            }
+            if (Model.CurrentWindow == "EVENTS")
+            {
+                <div class="container-fluid" style="width:100%" align="center">
+                    <div class="row" style="width:100%" align="center">
+                        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+                            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">NONCOMPLIANT EVENTS</strong>
+                        </div>
+                        <div class="jumbotron" style="width:99%; height:2.5vw; border:hidden; background-color:white;">
+                            <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">@ViewBag.ReportDateRange</strong>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.ShowIdling == "NO")
+                    {
+                        <strong class="card-text" style="font-weight:600; font-size:2.5vw; color:forestgreen">Speeding violations</strong><br /><br />
+                        <div class="row" style="width:100%;" align="center">
+                            <div class="jumbotron" style="width:10%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Total counts</h5>
+                                <strong class="card-text" style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.NoncompliantHighlights.TotalSpeedingCount</strong>
+                            </div>
+                            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Vehicle with most counts</h5>
+                                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.NoncompliantHighlights.VehicleMostSpeeding</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.VehicleMostSpeedingModel</h4>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.VehicleMostSpeedingCount violation(s)</h4>
+                            </div>
+                            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Time range with most counts</h5>
+                                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.NoncompliantHighlights.TimeRangeMostSpeeding</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.TimeRangeMostSpeedingCount violation(s)</h4>
+                            </div>
+                            <div class="jumbotron" style="width:45%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Location with most counts</h5>
+                                <strong style="font-weight:600; font-size:2vw; color:forestgreen">@Model.NoncompliantHighlights.LocationMostSpeeding</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.LocationMostSpeedingCount violation(s)</h4>
+                            </div>
+                        </div>
+                    }
+                    @*<br /><hr style="background-color:black; height:0.1rem; width:95%" />*@
+                    @if (ViewBag.ShowIdling != "NO")
+                    {
+                        <strong class="card-text" style="font-weight:600; font-size:2.5vw; color:forestgreen">Excessive idling</strong><br /><br />
+                        <div class="row" style="width:100%;" align="center">
+                            <div class="jumbotron" style="width:10%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Total counts</h5>
+                                <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:forestgreen">@Model.NoncompliantHighlights.TotalIdlingCount</strong>
+                            </div>
+                            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Vehicle with most counts</h5>
+                                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.NoncompliantHighlights.VehicleMostIdling</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.VehicleMostIdlingModel</h4>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.VehicleMostIdlingCount violation(s)</h4>
+                            </div>
+                            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Time range with most counts</h5>
+                                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.NoncompliantHighlights.TimeRangeMostIdling</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.TimeRangeMostIdlingCount violation(s)</h4>
+                            </div>
+                            <div class="jumbotron" style="width:45%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                                <h5 style="font-weight:400; font-size:1.3vw; color:black">Location with most counts</h5>
+                                <strong style="font-weight:600; font-size:2vw; color:forestgreen">@Model.NoncompliantHighlights.LocationMostIdling</strong>
+                                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.NoncompliantHighlights.LocationMostIdlingCount violation(s)</h4>
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    @if (ViewBag.ShowIdling != "NO")
+                    {
+                        using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+                        {
+                            <br /><div class="row" style="width:100%" align="left">
+                                <button class="btn btn-outline-primary" type="submit" name="speedingV" value="YES">Show speeding violations</button>
+                            </div><br /><br />
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("SummaryPage", "Reports", FormMethod.Post))
+                    {
+                        <br /><div class="row" style="width:100%" align="left">
+                            <button class="btn btn-outline-primary" type="submit" name="idlingV" value="YES">Show excessive idling</button>
+                        </div><br /><br />
+                        }
+                    }
+                </div>
+            }
+            //if (Model.CurrentWindow == "PRODUCTIVITY")
+            //{
+            //    <div class="row" style="width:100%" align="center">
+            //        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+            //            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">PRODUCTIVITY</strong>
+            //        </div>
+            //        <div class="jumbotron" style="width:99%; height:2.5vw; border:hidden; background-color:white;">
+            //            <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">Report from @Model.DateFROM.Value.ToString("MM-dd-yyyy") to  @Model.DateTO.Value.ToString("MM-dd-yyyy") (@Model.DaysInBetween days)</strong>
+            //        </div>
+            //    </div>
+            //}
+        }
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@model GPSReporting.Models.UserList
+<br />
+
+<div align="right">
+    <a href="@Request.UrlReferrer" class="btn btn-outline-primary" title="Back to list">Back to previous page</a>
+</div>
+<div class="container-fluid" style="width:100%" align="center">
+    <strong class="card-text" style="font-weight:600; font-size:4rem; color:black">ACCOUNTS PAGE</strong>
+    <hr style="background-color:black; height:0.1rem; width:30%; margin-top:-0.5rem; margin-bottom:0.5rem" />
+    <br /><br />
+
+    <h5 style="font-weight:400; font-size:1.5rem; color:black">Hello <a style="color:forestgreen">@Model.FirstName @Model.LastName</a>!</h5>
+    <br /><br />
+    @{
+        using (Html.BeginForm("Account", "Reports", FormMethod.Post))
+        {
+            <h5 style="font-weight:400; font-size:1rem; color:black">In order to change your password, kindy enter old password and then your desired new password.</h5>
+            <br />
+            <div class="form-group" align="center">
+                <h6 style="color:black; font-weight:600; display:inline"><a style="color:white">iiiiiiiii</a>Current password &nbsp;</h6>
+                <input type="password" class="form-control" style="width:20%; text-align:center; display:inline;" id="curPassword" name="curPassword" placeholder="enter current password" autocomplete="off" />
+            </div>
+            <div class="form-group" align="center">
+                <h6 style="color:black; font-weight:600; display:inline"><a style="color:white">iiiiiiiiiiiiii</a>New password &nbsp;</h6>
+                <input type="password" class="form-control" style="width:20%; text-align:center; display:inline" id="newPassword" name="newPassword" placeholder="enter new password" autocomplete="off" />
+            </div>
+            <div class="form-group" align="center">
+                <h6 style="color:black; font-weight:600; display:inline">Re-enter new password &nbsp;</h6>
+                <input type="password" class="form-control" style="width:20%; text-align:center; display:inline" id="reenterPassword" name="reenterPassword" placeholder="re-enter new password" autocomplete="off" />
+            </div>
+            <br />
+            <button class="btn btn-outline-success" name="apply" value="YES" style="width:10%">Apply</button>
+            <br /><br />
+            <h5 style="font-weight:600; font-size:1rem; color:red">Note: <span style="font-weight:400; font-size:1rem; color:black">You will be logged out of the website once you apply changes and will be redirected to the login page.</span></h5>
+        }
+        if (ViewBag.Notif != "" || ViewBag.Notif != null)
+        {
+            <br />
+            <h5 style="font-weight:400; font-size:1rem; color:red">@ViewBag.Notif</h5>
+        }
+    }
+</div>

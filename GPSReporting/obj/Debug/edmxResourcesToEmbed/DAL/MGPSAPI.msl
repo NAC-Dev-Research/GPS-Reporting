@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MGPSAPIModelStoreContainer" CdmEntityContainer="MGPSAPIEntities">
+    <EntitySetMapping Name="DMCVehicleLists">
+      <EntityTypeMapping TypeName="MGPSAPIModel.DMCVehicleList">
+        <MappingFragment StoreEntitySet="DMCVehicleList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+          <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+          <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+          <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLists">
+      <EntityTypeMapping TypeName="MGPSAPIModel.UserList">
+        <MappingFragment StoreEntitySet="UserList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Site" ColumnName="Site" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TripReportRaw_vw">
+      <EntityTypeMapping TypeName="MGPSAPIModel.TripReportRaw_vw">
+        <MappingFragment StoreEntitySet="TripReportRaw_vw">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+          <ScalarProperty Name="Header" ColumnName="Header" />
+          <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+          <ScalarProperty Name="AverageSpeed" ColumnName="AverageSpeed" />
+          <ScalarProperty Name="TripLength" ColumnName="TripLength" />
+          <ScalarProperty Name="TravelTime" ColumnName="TravelTime" />
+          <ScalarProperty Name="StartLocation" ColumnName="StartLocation" />
+          <ScalarProperty Name="EndLocation" ColumnName="EndLocation" />
+          <ScalarProperty Name="StopTimeFormat" ColumnName="StopTimeFormat" />
+          <ScalarProperty Name="StopDuration" ColumnName="StopDuration" />
+          <ScalarProperty Name="IdleTimeFormat" ColumnName="IdleTimeFormat" />
+          <ScalarProperty Name="IdleDuration" ColumnName="IdleDuration" />
+          <ScalarProperty Name="OdometerValue" ColumnName="OdometerValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogLists">
+      <EntityTypeMapping TypeName="MGPSAPIModel.LogList">
+        <MappingFragment StoreEntitySet="LogList">
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Logout" ColumnName="Logout" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SpeedViolation_vw">
+      <EntityTypeMapping TypeName="MGPSAPIModel.SpeedViolation_vw">
+        <MappingFragment StoreEntitySet="SpeedViolation_vw">
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
+          <ScalarProperty Name="AverageSpeed" ColumnName="AverageSpeed" />
+          <ScalarProperty Name="DurationDec" ColumnName="DurationDec" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+          <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+          <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+          <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+          <ScalarProperty Name="Site" ColumnName="Site" />
+          <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcessiveIdling_vw">
+      <EntityTypeMapping TypeName="MGPSAPIModel.ExcessiveIdling_vw">
+        <MappingFragment StoreEntitySet="ExcessiveIdling_vw">
+          <ScalarProperty Name="IdlingPercent" ColumnName="IdlingPercent" />
+          <ScalarProperty Name="IdlingDuration" ColumnName="IdlingDuration" />
+          <ScalarProperty Name="IdlingDurationDec" ColumnName="IdlingDurationDec" />
+          <ScalarProperty Name="StopDurationDec" ColumnName="StopDurationDec" />
+          <ScalarProperty Name="StopDuration" ColumnName="StopDuration" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="TripTimeEnd" ColumnName="TripTimeEnd" />
+          <ScalarProperty Name="TripTimeStart" ColumnName="TripTimeStart" />
+          <ScalarProperty Name="Header" ColumnName="Header" />
+          <ScalarProperty Name="ReportDateFrom" ColumnName="ReportDateFrom" />
+          <ScalarProperty Name="Site" ColumnName="Site" />
+          <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RTNVehicleLists">
+      <EntityTypeMapping TypeName="MGPSAPIModel.RTNVehicleList">
+        <MappingFragment StoreEntitySet="RTNVehicleList">
+          <ScalarProperty Name="EquipmentType" ColumnName="EquipmentType" />
+          <ScalarProperty Name="PlateNumber" ColumnName="PlateNumber" />
+          <ScalarProperty Name="VehicleModel" ColumnName="VehicleModel" />
+          <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+          <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

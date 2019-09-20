@@ -1,0 +1,37 @@
+﻿<br />
+<br />
+
+<div class="container-fluid" style="width:100%" align="center">
+    <br />
+    <strong class="card-text" style="font-weight:600; font-size:4rem; color:black">LOGIN PAGE</strong>
+    <hr style="background-color:black; height:0.1rem; width:30%; margin-top:-0.5rem; margin-bottom:0.5rem" />
+    <br /><br /><br /><br />
+    @using (Html.BeginForm("Login", "Reports", FormMethod.Post))
+    {
+
+        @Html.AntiForgeryToken()
+        <div class="jumbotron" style="width:30%; height:35%; background-color:white; border:double">
+            <br />
+            <div class="form-group" align="center">
+                <h6 style="color:black; font-weight:600; display:inline">Username &nbsp;</h6>
+                <input type="text" class="form-control" style="width:50%; text-align:center; display:inline;" id="username" name="username" placeholder="enter username" autocomplete="off" />
+            </div>
+            <div class="form-group" align="center">
+                <h6 style="color:black; font-weight:600; display:inline">Password &nbsp;</h6>
+                <input type="password" class="form-control" style="width:50%; text-align:center; display:inline" id="password" name="password" placeholder="enter password" autocomplete="off" />
+            </div>
+            <div class="form-group" style="width:100%" align="center">
+                <button name="loginbtn" value="YES" type="submit" class="btn btn-outline-success" style="width:9rem">Login</button>
+            </div>
+        </div>
+        <br />
+        <strong class="card-text" style="font-weight:400; font-size:1rem; color:black">Kindly enter your username and password</strong>
+    }
+    @{
+        if (ViewBag.LogInSuccess == "Fail")
+        {
+            <br />
+            <strong class="card-text" style="font-weight:400; font-size:1rem; color:red">Kindly enter correct login details.</strong>
+        }
+    }
+</div>

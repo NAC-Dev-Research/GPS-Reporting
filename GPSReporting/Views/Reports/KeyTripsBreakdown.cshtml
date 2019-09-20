@@ -1,0 +1,48 @@
+﻿@model IEnumerable<GPSReporting.Models.TripsReportRaw>
+
+<br />
+<br />
+
+<div class="container-fluid" style="width:100%" align="right">
+    @using (Html.BeginForm("KeyTripsBreakdown", "Reports", FormMethod.Post))
+    {
+        <button class="btn btn-outline-primary" name="backToMenu" value="Yes" align="right">Close [x]</button>
+    }
+</div>
+
+<br />
+<br />
+
+<p align="center"><strong><span style="font-size: 18pt">Trips Breakdown</span></strong></p>
+<table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+    <tbody>
+        <tr style="background-color: #e1f2d4">
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Date</strong></td>
+            <td style="text-align:center" width="9%" rowspan="1" colspan="1"><strong>Time</strong></td>
+            <td style="text-align:center" width="6%" rowspan="1" colspan="1"><strong>Vehicle ID</strong></td>
+            <td style="text-align:center" width="19%" rowspan="1" colspan="1"><strong>Start location</strong></td>
+            <td style="text-align:center" width="19%" rowspan="1" colspan="1"><strong>End location</strong></td>
+            <td style="text-align:center" width="7%" rowspan="1" colspan="1"><strong>Trip length, km</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Travel time, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Stop(s) in between</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Idling time, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Stop time, hh:mm:ss</strong></td>
+        </tr>
+        @{foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.ReportDate)</td>
+                    <td style="text-align:center">@item.StartTime - @item.EndTime</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.EquipmentNo)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.StartLocation)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.EndLocation)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripLength)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripDuration)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.StopsInBetween)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripIdlingTime)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripStopTime)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
