@@ -110,7 +110,7 @@ namespace GPSReporting.Controllers
                     Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTrips(dateFrom, dateTo, TripReportRawList));
                     Task.WaitAll(new[] { SortByLocation });
                 }
-                else if (site.ToUpper() == "DMC")
+                else if (site.ToUpper() == "RTN")
                 {
                     TripReportRawList.Clear();
                     Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
@@ -164,7 +164,7 @@ namespace GPSReporting.Controllers
                 else
                     ViewBag.ShowReport = viewModel.CurrentWindow;
 
-                if (viewModel._tripReportRaw.Count() <= 0)
+                if (viewModel._tripReportRaw.Count() <= 0 && viewModel._overSpeedingList.Count() <= 0 && viewModel._excessiveIdlingList.Count <= 0)
                     ViewBag.Continue = "FALSE";
                 else
                 {

@@ -120,7 +120,7 @@ namespace GPSReporting.Controllers
 
         public List<TripsReportRaw> IdentifyTripsRTN(DateTime? dateFrom, DateTime? dateTo, List<TripsReportRaw> TripReportRawList)
         {
-            var tripReportRawDB = db.vw_RTNTripReportRaw.Where(s => s.ReportDateFrom >= dateFrom && s.ReportDateFrom <= dateTo).OrderBy(s => s.TrackerID).ThenBy(s => s.ReportDateFrom).ToList();
+            List<vw_RTNTripReportRaw> tripReportRawDB = db.vw_RTNTripReportRaw.Where(s => s.ReportDateFrom >= dateFrom && s.ReportDateFrom <= dateTo).OrderBy(s => s.TrackerID).ThenBy(s => s.ReportDateFrom).ToList();
 
             int _StopsCount = 0;
             string _endTime = "";
