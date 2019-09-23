@@ -110,13 +110,13 @@ namespace GPSReporting.Controllers
                     Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTrips(dateFrom, dateTo, TripReportRawList));
                     Task.WaitAll(new[] { SortByLocation });
                 }
-                else if (site.ToUpper() == "RTN")
-                {
-                    TripReportRawList.Clear();
-                    Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
-                    Task.WaitAll(new[] { SortByLocation });
-                    Session["RTNTripReportList"] = TripReportRawList;
-                }
+                //else if (site.ToUpper() == "RTN")
+                //{
+                //    TripReportRawList.Clear();
+                //    Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
+                //    Task.WaitAll(new[] { SortByLocation });
+                //    Session["RTNTripReportList"] = TripReportRawList;
+                //}
 
                 viewModel.NoncompliantHighlights = new NonCompliantHighlights();
                 viewModel._excessiveIdlingList.Clear();

@@ -106,7 +106,12 @@
                         <button class="btn" style="color:black" disabled>Mine Site &nbsp;&nbsp;&nbsp;</button>
                         <select class="form-control btn-outline-primary" name="site" id="site" style="width:10.2rem; text-align:center; display:inline;">
                             <option id="site" style="background-color:white; color:black" value="DMC">DMC</option>
+                            @if (Session["user"].ToString() == "rolly" || Session["user"].ToString() == "matthewfabic" || 
+                                Session["user"].ToString() == "lineth" || Session["user"].ToString() == "lyndsy" || 
+                                Session["user"].ToString() == "jubert")
+                            {
                             <option id="site" style="background-color:white; color:black" value="RTN">RTN</option>
+                            }
                         </select>
 
                         <button class="btn" style="color:black" disabled>&nbsp;&nbsp; Vehicle Type &nbsp;</button>
