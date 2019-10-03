@@ -7,11 +7,12 @@ namespace GPSReporting.Models.RTNReports
 {
     public class vw_RTNTripReportRaw
     {
+        public Int64 NID { get; set; }
         public int TrackerID { get; set; }
         public string EquipmentID { get; set; }
         public string EquipmentType { get; set; }
         public string VehicleModel { get; set; }
-        public string PlateModel { get; set; }
+        public string PlateNumber { get; set; }
         public DateTime ReportDateFrom { get; set; }
         public DateTime ReportDateTo { get; set; }
         public decimal AverageSpeed { get; set; }

@@ -166,6 +166,7 @@
     <Compile Include="Models\ExcessiveIdling_vw.cs" />
     <Compile Include="Models\GeofenceTrafficAssessment.cs" />
     <Compile Include="Models\LogList.cs" />
+    <Compile Include="Models\QueryDetails.cs" />
     <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\RTNReports\vw_RTNTripReportRaw.cs" />
     <Compile Include="Models\RTNVehicleList.cs" />
@@ -250,12 +251,12 @@
     <Content Include="Views\Reports\Account.cshtml" />
     <Content Include="Views\Reports\Log.cshtml" />
     <Content Include="Views\Entries\AddVehicle.cshtml" />
+    <Content Include="Views\RTNReports\VehicleUsageHighLights.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ReportsFunction\" />
     <Folder Include="Views\RTNReportsFunction\" />
-    <Folder Include="Views\RTNReports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

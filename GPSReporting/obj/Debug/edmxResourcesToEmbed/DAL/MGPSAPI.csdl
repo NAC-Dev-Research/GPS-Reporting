@@ -117,9 +117,9 @@
   </EntityType>
   <EntityType Name="vw_RTNTripReportRaw">
     <Key>
-      <PropertyRef Name="TrackerID" />
-      <PropertyRef Name="EquipmentID" />
+      <PropertyRef Name="NID" />
     </Key>
+    <Property Name="NID" Type="Int64" Nullable="false" />
     <Property Name="TrackerID" Type="Int32" Nullable="false" />
     <Property Name="EquipmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="EquipmentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />

@@ -120,9 +120,9 @@ warning 6002: The table/view 'MGPSAPI.dbo.TripReportRaw_vw' does not have a prim
 warning 6002: The table/view 'MGPSAPI.dbo.vw_RTNTripReportRaw' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_RTNTripReportRaw">
           <Key>
-            <PropertyRef Name="TrackerID" />
-            <PropertyRef Name="EquipmentID" />
+            <PropertyRef Name="NID" />
           </Key>
+          <Property Name="NID" Type="bigint" Nullable="false" />
           <Property Name="TrackerID" Type="int" Nullable="false" />
           <Property Name="EquipmentID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EquipmentType" Type="nvarchar" MaxLength="50" />
@@ -200,6 +200,7 @@ warning 6002: The table/view 'MGPSAPI.dbo.vw_RTNTripReportRaw' does not have a p
           </EntitySet>
           <EntitySet Name="vw_RTNTripReportRaw" EntityType="Self.vw_RTNTripReportRaw" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [vw_RTNTripReportRaw].[NID] AS [NID], 
     [vw_RTNTripReportRaw].[TrackerID] AS [TrackerID], 
     [vw_RTNTripReportRaw].[EquipmentID] AS [EquipmentID], 
     [vw_RTNTripReportRaw].[EquipmentType] AS [EquipmentType], 
@@ -341,9 +342,9 @@ warning 6002: The table/view 'MGPSAPI.dbo.vw_RTNTripReportRaw' does not have a p
         </EntityType>
         <EntityType Name="vw_RTNTripReportRaw">
           <Key>
-            <PropertyRef Name="TrackerID" />
-            <PropertyRef Name="EquipmentID" />
+            <PropertyRef Name="NID" />
           </Key>
+          <Property Name="NID" Type="Int64" Nullable="false" />
           <Property Name="TrackerID" Type="Int32" Nullable="false" />
           <Property Name="EquipmentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EquipmentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -497,6 +498,7 @@ warning 6002: The table/view 'MGPSAPI.dbo.vw_RTNTripReportRaw' does not have a p
                 <ScalarProperty Name="EquipmentType" ColumnName="EquipmentType" />
                 <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
                 <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+                <ScalarProperty Name="NID" ColumnName="NID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

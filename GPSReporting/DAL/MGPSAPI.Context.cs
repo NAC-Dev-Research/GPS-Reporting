@@ -14,9 +14,7 @@ namespace GPSReporting.DAL
     using System.Data.Entity.Infrastructure;
     using GPSReporting.Models;
     using GPSReporting.Models.RTNReports;
-
-
-
+    
     public partial class MGPSAPIEntities : DbContext
     {
         public MGPSAPIEntities()

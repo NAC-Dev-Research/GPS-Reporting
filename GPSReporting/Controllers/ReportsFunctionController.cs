@@ -108,7 +108,7 @@ namespace GPSReporting.Controllers
                 curData.TripStopTimeDec = _TotalStopDuration;
                 curData.StartTime = _startTime;
                 curData.EndTime = _endTime;
-
+                
                 _StopsCount = 0;
                 _SpottedEndLocation = _SpottedStartLocation = _endTime = _startTime = "";
                 _TotalTripLength = _TotalTripDuration = 0;
@@ -117,111 +117,7 @@ namespace GPSReporting.Controllers
             viewModel._tripReportRaw = TripReportRawList;
             return TripReportRawList;
         }
-
-        public List<TripsReportRaw> IdentifyTripsRTN(DateTime? dateFrom, DateTime? dateTo, List<TripsReportRaw> TripReportRawList)
-        {
-            List<vw_RTNTripReportRaw> tripReportRawDB = db.vw_RTNTripReportRaw.Where(s => s.ReportDateFrom >= dateFrom && s.ReportDateFrom <= dateTo).OrderBy(s => s.TrackerID).ThenBy(s => s.ReportDateFrom).ToList();
-
-            int _StopsCount = 0;
-            string _endTime = "";
-            string _startTime = "";
-            int _currentTrackerID = 0;
-            decimal _TotalTripLength = 0;
-            decimal _TotalTripDuration = 0;
-            decimal? _TotalIdleDuration = 0;
-            decimal? _TotalStopDuration = 0;
-            string _SpottedEndLocation = "";
-            string _SpottedStartLocation = "";
-
-            foreach (var data in tripReportRawDB)
-            {
-                #region Checking before finalizing trip data
-                if (_currentTrackerID == 0)
-                    _currentTrackerID = data.TrackerID;
-                else if (_currentTrackerID != data.TrackerID)
-                {
-                    _currentTrackerID = data.TrackerID;
-                    _StopsCount = 0;
-                    _SpottedEndLocation = _SpottedStartLocation = _endTime = _startTime = "";
-                    _TotalTripLength = _TotalTripDuration = 0;
-                    _TotalIdleDuration = _TotalStopDuration = 0;
-                }
-
-                string[] _startLocation = data.MovementStart.ToString().Split(new string[] { " - " }, StringSplitOptions.None);
-                string[] _endLocation = data.MovementEnd.ToString().Split(new string[] { " - " }, StringSplitOptions.None);
-
-                if (_startLocation[1].Substring(0, 1) != "[" || _endLocation[1].Substring(0, 1) != "[")
-                {
-                    if (_startLocation[1].Substring(0, 1) == "[" && _endLocation[1].Substring(0, 1) != "[")
-                    {
-                        _SpottedEndLocation = _SpottedStartLocation = _endTime = _startTime = "";
-                        _TotalTripLength = _TotalTripDuration = 0;
-                        _TotalIdleDuration = _TotalStopDuration = 0;
-                        _SpottedStartLocation = _startLocation[1];
-                        _startTime = _startLocation[0];
-                        _StopsCount = 0;
-                    }
-                    if (_startLocation[1].Substring(0, 1) != "[" && _endLocation[1].Substring(0, 1) == "[" && _SpottedStartLocation != "")
-                    {
-                        _TotalTripLength = _TotalTripLength + data.TripLength;
-                        _TotalTripDuration = _TotalTripDuration + data.TravelTime;
-                        _TotalIdleDuration = _TotalIdleDuration + data.IdleDuration;
-                        _TotalStopDuration = _TotalStopDuration + data.StopDuration;
-                        _SpottedEndLocation = _endLocation[1];
-                        _endTime = _endLocation[0];
-                    }
-                    if (_SpottedStartLocation == "" || _SpottedEndLocation == "")
-                    {
-                        _StopsCount = _StopsCount + 1;
-                        _TotalTripLength = _TotalTripLength + data.TripLength;
-                        _TotalTripDuration = _TotalTripDuration + data.TravelTime;
-                        _TotalIdleDuration = _TotalIdleDuration + data.IdleDuration;
-                        _TotalStopDuration = _TotalStopDuration + data.StopDuration;
-                        continue;
-                    }
-                }
-
-                if (_startLocation[1].Substring(0, 1) == "[" && _endLocation[1].Substring(0, 1) == "[")
-                {
-                    _StopsCount = 0;
-                    _endTime = _endLocation[0];
-                    _startTime = _startLocation[0];
-                    _TotalTripLength = data.TripLength;
-                    _TotalTripDuration = data.TravelTime;
-                    _TotalIdleDuration = _TotalStopDuration = 0;
-                    _SpottedEndLocation = _endLocation[1];
-                    _SpottedStartLocation = _startLocation[1];
-                }
-                #endregion
-
-                TripsReportRaw curData = new TripsReportRaw();
-
-                curData.ReportDate = data.ReportDateFrom.ToString("yyyy-MM-dd");
-                curData.EquipmentNo = data.EquipmentID.ToString();
-                curData.EquipmentType = data.EquipmentType;
-                curData.TripName = FormatTrip(_SpottedStartLocation, _SpottedEndLocation, "name");
-                curData.StartLocation = FormatTrip(_SpottedStartLocation, _SpottedEndLocation, "start");
-                curData.EndLocation = FormatTrip(_SpottedStartLocation, _SpottedEndLocation, "end");
-                curData.TripLength = _TotalTripLength;
-                curData.TripDuration = ConvertToTimeFormat(_TotalTripDuration);
-                curData.TripDurationDec = _TotalTripDuration;
-                curData.StopsInBetween = _StopsCount.ToString();
-                curData.TripIdlingTime = ConvertToTimeFormat(Convert.ToDecimal(_TotalIdleDuration));
-                curData.TripIdlingTimeDec = _TotalIdleDuration;
-                curData.TripStopTime = ConvertToTimeFormat(Convert.ToDecimal(_TotalStopDuration));
-                curData.TripStopTimeDec = _TotalStopDuration;
-                curData.StartTime = _startTime;
-                curData.EndTime = _endTime;
-
-                _StopsCount = 0;
-                _SpottedEndLocation = _SpottedStartLocation = _endTime = _startTime = "";
-                _TotalTripLength = _TotalTripDuration = 0;
-                TripReportRawList.Add(curData);
-            }
-            viewModel._tripReportRaw = TripReportRawList;
-            return TripReportRawList;
-        }
-
+        
         public void IdentifyIdlingViolations(string site, List<ExcessiveIdling_vw> IdlingListDB)
         {
             viewModel = (ReportsViewModel)Session["mySession"];
@@ -529,14 +425,19 @@ namespace GPSReporting.Controllers
             {
                 decimal NoOfDaysInBetween = ((TimeSpan)(dateTo - dateFrom)).Days;
 
+                if (NoOfDaysInBetween == 0)
+                    NoOfDaysInBetween = 1;
                 viewModel.UsageHighlights.AverageTrips = Math.Round((Convert.ToDecimal(viewModel.UsageHighlights.TotalTrips) / NoOfDaysInBetween), 1);
-                viewModel.UsageHighlights.AverageMileage = Math.Floor(viewModel.UsageHighlights.TotalMileage / NoOfDaysInBetween);
-
-                decimal _tempConvertedToHour = viewModel.UsageHighlights.TotalTravelTime / 60;
-                _tempConvertedToHour = _tempConvertedToHour / 60;
-                decimal _tempAveTravelTime = Math.Round((_tempConvertedToHour / NoOfDaysInBetween), 1);
-                viewModel.UsageHighlights.TotalTravelTime = Math.Round(_tempConvertedToHour, 2);
-                viewModel.UsageHighlights.AverageTravelTime = _tempAveTravelTime;
+                if (viewModel.UsageHighlights.TotalMileage > 0)
+                    viewModel.UsageHighlights.AverageMileage = Math.Floor(viewModel.UsageHighlights.TotalMileage / NoOfDaysInBetween);
+                if (viewModel.UsageHighlights.TotalTravelTime > 0)
+                {
+                    decimal _tempConvertedToHour = viewModel.UsageHighlights.TotalTravelTime / 60;
+                    _tempConvertedToHour = _tempConvertedToHour / 60;
+                    decimal _tempAveTravelTime = Math.Round((_tempConvertedToHour / NoOfDaysInBetween), 1);
+                    viewModel.UsageHighlights.TotalTravelTime = Math.Round(_tempConvertedToHour, 2);
+                    viewModel.UsageHighlights.AverageTravelTime = _tempAveTravelTime;
+                }
             }
         }
 

@@ -130,6 +130,7 @@
           <ScalarProperty Name="EquipmentType" ColumnName="EquipmentType" />
           <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
           <ScalarProperty Name="TrackerID" ColumnName="TrackerID" />
+          <ScalarProperty Name="NID" ColumnName="NID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

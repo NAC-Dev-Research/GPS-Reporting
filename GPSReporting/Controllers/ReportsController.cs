@@ -74,12 +74,26 @@ namespace GPSReporting.Controllers
         {
             if (Session["user"] == null)
                 Response.Redirect("Login", true);
-            
+
+            #region Initialization
             viewModel = (ReportsViewModel)Session["mySession"];
             Session["chosenSite"] = site;
             Session["chosenVehicleType"] = vehicleType;
             ViewBag.ShowReport = "HIDE";
             ViewBag.Continue = "TRUE";
+
+            QueryDetails queryDetails = new QueryDetails();
+            queryDetails.DateFrom = dateFrom;
+            queryDetails.DateTo = dateTo;
+            queryDetails.StartTime = startTime;
+            queryDetails.EndTime = endTime;
+            queryDetails.Site = site;
+            queryDetails.VehicleType = vehicleType;
+            Session["queryDetails"] = queryDetails;
+            #endregion
+
+            if (site == "RTN")
+                return RedirectToAction("VehicleUsageHighLights", "RTNReports");
 
             if (showReport == "YES" && Session["user"] != null)
             {
@@ -113,9 +127,10 @@ namespace GPSReporting.Controllers
                 //else if (site.ToUpper() == "RTN")
                 //{
                 //    TripReportRawList.Clear();
-                //    Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
+                //    Task SortByLocation = Task.Factory.StartNew(() => IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
+                //    //Task SortByLocation = Task.Factory.StartNew(() => TripReportRawList = IdentifyTripsRTN(dateFrom, dateTo, TripReportRawList));
                 //    Task.WaitAll(new[] { SortByLocation });
-                //    Session["RTNTripReportList"] = TripReportRawList;
+                //    //Session["RTNTripReportList"] = TripReportRawList;
                 //}
 
                 viewModel.NoncompliantHighlights = new NonCompliantHighlights();
