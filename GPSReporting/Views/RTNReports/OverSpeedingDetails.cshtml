@@ -1,0 +1,75 @@
+﻿@model PagedList.IPagedList<GPSReporting.Models.SpeedViolation_vw>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<br />
+<br />
+
+<div class="row" align="center">
+    <div class="form-group" style="width:25%" align="left">
+        <button class="btn btn-outline-primary" name="backToMenu" onclick="window.location='NonCompliantHighlights'">Back to summary page</button>
+        <button class="btn btn-outline-success" name="downReport" value="YES" onclick="GenerateExcel()">Download Report</button>
+    </div>
+    <div class="form-group" style="width:50%" align="center">
+        <button class="btn btn-outline-primary" name="overSpeed">Over speeding</button>
+        <button class="btn btn-outline-primary" name="idling" onclick="window.location='ExcessiveIdlingDetails'">Excessive idling</button>
+    </div>
+</div>
+
+<div class="row" align="center">
+    <div class="form-group" style="width:35%" align="left">
+        @using (Html.BeginForm("OverSpeedingDetails", "RTNReports", FormMethod.Post))
+        {
+            <button class="btn" style="color:black" disabled>Choose vehicle: </button>
+            <select class="form-control btn-outline-primary" name="chosenVehicle" id="chosenVehicle" style="width:15.2rem; height:2rem; text-align:center; display:inline;">
+                <option name="chosenVehicle" id="chosenVehicle" style="background-color:white; color:black" value="ALL">All vehicles</option>
+                @{
+                    if (ViewBag.RTNVehiclesList != null)
+                    {
+                        foreach (var item in ViewBag.RTNVehiclesList)
+                        {
+                            <option name="chosenVehicle" id="chosenVehicle" style="background-color:white; color:black" value="@item.Value">@item.Value</option>
+                        }
+                    }
+                }
+            </select>
+            <button class="btn btn-outline-warning" name="sortData" type="submit" value="Yes">Sort</button>
+        }
+    </div>
+    <div class="form-group" style="width:30%" align="center">
+        <p align="center"><strong><span style="font-size: 18pt">Over speeding</span></strong></p>
+    </div>
+</div>
+
+<table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+    <tbody>
+        <tr style="background-color:#bfffdb">
+            <td style="text-align:center" rowspan="1" colspan="8"><strong>Speeding violations </strong></td>
+        </tr>
+        <tr style="background-color: #e1f2d4">
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Vehicle</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Date</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Time Start, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="40%" rowspan="1" colspan="1"><strong>Address</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average Speed, kph</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Max Speed, kph</strong></td>
+        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.EquipmentID)</td>
+                    <td style="text-align:center">@item.ReportDateFrom.ToShortDateString()</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.StartTime)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.Address)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.AverageSpeed)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.MaxSpeed)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table><br />
+<div class="form-group" align="center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("OverSpeedingDetails", new { page }))
+</div>

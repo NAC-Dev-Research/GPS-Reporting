@@ -252,6 +252,12 @@
     <Content Include="Views\Reports\Log.cshtml" />
     <Content Include="Views\Entries\AddVehicle.cshtml" />
     <Content Include="Views\RTNReports\VehicleUsageHighLights.cshtml" />
+    <Content Include="Views\RTNReports\VehicleUsageDetails.cshtml" />
+    <Content Include="Views\RTNReports\KeyTripsHighlights.cshtml" />
+    <Content Include="Views\RTNReports\KeyTripsDetails.cshtml" />
+    <Content Include="Views\RTNReports\NonCompliantHighlights.cshtml" />
+    <Content Include="Views\RTNReports\ExcessiveIdlingDetails.cshtml" />
+    <Content Include="Views\RTNReports\OverSpeedingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,95 @@
+﻿<br />
+<div class="row" align="center">
+    <div class="col-lg-3" align="left">
+        <button class="btn btn-outline-primary" name="backToInput" value="YES" onclick="window.location='@Url.Action("Index", "Reports")'">Back to query page</button>
+        <button class="btn btn-outline-primary" name="detailsWindow" value="YES" onclick="window.location='VehicleUsageDetails'">Details window</button>
+    </div>
+    <div class="col-lg-6" align="center">
+        <button class="btn btn-primary" type="submit" name="reportType" onclick="window.location='VehicleUsageHighlights'">Vehicle Usage</button>
+        <button class="btn btn-primary" type="submit" name="reportType">Frequently Performed Key Trips</button>
+        <button class="btn btn-primary" type="submit" name="reportType" onclick="window.location='NonCompliantHighlights'">Noncompliant Events</button>
+    </div>
+    <div class="col-lg-3" align="right">
+        <button class="btn btn-outline-danger" type="submit" name="logOut" value="YES">Log Out</button>
+        <h4 class="d-inline" style="font-weight:600; color:white">iiii</h4>
+    </div>
+</div>
+
+<br />
+<br />
+<div class="container-fluid" style="width:100%" align="center">
+    <div class="row" style="width:99%" align="center">
+        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">FREQUENTLY PERFORMED KEY TRIPS</strong>
+        </div>
+    </div>
+    <div class="form-group" style="width:99%; border:hidden; background-color:white;">
+        <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">Report date</strong>
+    </div>
+
+    <br />
+    <div class="row" style="width:100%;" align="center">
+        <div class="jumbotron" style="width:99%; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black;">Route with most trip count</h5>
+            <strong class="card-text" style="font-weight:600; font-size:2.5vw; color:forestgreen">999,999</strong>
+            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">999,999 trip(s)</h4>
+        </div>
+    </div>
+
+    <br />
+    <div class="row" style="width:100%;" align="center">
+        <div class="jumbotron" style="width:5%; border:hidden; background-color:white; border-top-color:white"></div>
+        <div class="jumbotron" style="width:40%; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black;"> Average travel time</h5>
+            <strong style="font-weight:600; font-size:3vw; color:forestgreen; font-size-adjust:initial">999,999</strong>
+            <h4 style="font-weight:600; font-size:2vw; color:steelblue"></h4>
+        </div>
+        <div class="jumbotron" style="width:9%; border:hidden; background-color:white; border-top-color:white"></div>
+        <div class="jumbotron" style="width:40%; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black;">Vehicle with most trips performed for this route</h5>
+            <strong style="font-weight:600; font-size:3vw; color:forestgreen">999,999</strong>
+            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">999,999</h4>
+            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">999,999 trip(s)</h4>
+        </div>
+        <div class="jumbotron" style="width:5%; border:hidden; background-color:white; border-top-color:white"></div>
+    </div>
+
+    <div class="row" id="ShowMoreDetails" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="keyTripsSummary" value="YES">Show more details >></button></div>
+    <div class="row" id="ShowLessDetails" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="hideKeyTripsSummary" value="YES">Show less details <<</button></div>
+    <br />
+
+    <div class="row" id="MoreDetails" style="width:100%;" align="center">
+        <div class="jumbotron" style="width:5%; height:10vw; border:hidden; background-color:white; border-top-color:white"></div>
+        <div class="jumbotron" style="width:40%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black">Route with highest idling time</h5>
+            <strong class="card-text" style="font-weight:600; font-size:2vw; color:forestgreen">999,999</strong>
+            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">999,999</h4>
+        </div>
+        <div class="jumbotron" style="width:9%; height:10vw; border:hidden; background-color:white; border-top-color:white"></div>
+        <div class="jumbotron" style="width:40%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black">Vehicle with highest average idling time for this route</h5>
+            <strong style="font-weight:600; font-size:3vw; color:forestgreen">999,999</strong>
+            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">999,999</h4>
+            <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">999,999</h4>
+        </div>
+        <div class="jumbotron" style="width:5%; height:10vw; border:hidden; background-color:white; border-top-color:white"></div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $('#MoreDetails').hide();
+    $('#ShowLessDetails').hide();
+    $(document).ready(function () {
+        $('#ShowMoreDetails').click(function () {
+            $('#MoreDetails').show();
+            $('#ShowLessDetails').show();
+            $('#ShowMoreDetails').hide();
+        });
+        $('#ShowLessDetails').click(function () {
+            $('#MoreDetails').hide();
+            $('#ShowMoreDetails').show();
+            $('#ShowLessDetails').hide();
+        });
+    });
+</script>

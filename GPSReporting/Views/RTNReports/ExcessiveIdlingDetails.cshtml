@@ -1,0 +1,85 @@
+﻿@model PagedList.IPagedList<GPSReporting.Models.ExcessiveIdling_vw>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<br />
+<br />
+
+<div class="row" align="center">
+    <div class="form-group" style="width:25%" align="left">
+        <button class="btn btn-outline-primary" name="backToMenu" onclick="window.location='NonCompliantHighlights'">Back to summary page</button>
+        <button class="btn btn-outline-success" name="downReport" value="YES" onclick="GenerateExcel()">Download Report</button>
+    </div>
+    <div class="form-group" style="width:50%" align="center">
+        <button class="btn btn-outline-primary" name="overSpeed" onclick="window.location='OverSpeedingDetails'">Over speeding</button>
+        <button class="btn btn-outline-primary" name="idling" value="Yes">Excessive idling</button>
+    </div>
+</div>
+
+<div class="row" align="center">
+    <div class="form-group" style="width:35%" align="left">
+        @using (Html.BeginForm("ExcessiveIdlingDetails", "RTNReports", FormMethod.Post))
+        {
+            <button class="btn" style="color:black" disabled>Choose vehicle: </button>
+            <select class="form-control btn-outline-primary" name="chosenVehicle" id="chosenVehicle" style="width:15.2rem; height:2rem; text-align:center; display:inline;">
+                <option name="chosenVehicle" id="chosenVehicle" style="background-color:white; color:black" value="ALL">All vehicles</option>
+                @{
+                    if (ViewBag.RTNVehiclesList != null)
+                    {
+                        foreach (var item in ViewBag.RTNVehiclesList)
+                        {
+                            <option name="chosenVehicle" id="chosenVehicle" style="background-color:white; color:black" value="@item.Value">@item.Value</option>
+                        }
+                    }
+                }
+            </select>
+            <button class="btn btn-outline-warning" name="sortData" type="submit" value="Yes">Sort</button>
+        }
+    </div>
+    <div class="form-group" style="width:30%" align="center">
+        <p align="center"><strong><span style="font-size: 18pt">Excessive idling</span></strong></p>
+    </div>
+</div>
+
+<table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+    <tbody>
+        <tr style="background-color:#bfffdb">
+            <td style="text-align:center" rowspan="1" colspan="8"><strong>Excessive idling violations </strong></td>
+        </tr>
+        <tr style="background-color: #e1f2d4">
+            <td style="text-align:center" width="5%" rowspan="1" colspan="1"><strong>Vehicle</strong></td>
+            <td style="text-align:center" width="5%" rowspan="1" colspan="1"><strong>Date</strong></td>
+            <td style="text-align:center" width="5%" rowspan="1" colspan="1"><strong>Parking Start, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="5%" rowspan="1" colspan="1"><strong>Parking End, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="40%" rowspan="1" colspan="1"><strong>Address</strong></td>
+            <td style="text-align:center" width="5%" rowspan="1" colspan="1"><strong>Parking Duration, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="5%" rowspan="1" colspan="1"><strong>Idling Duration, hh:mm:ss</strong></td>
+        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.Header)</td>
+                    <td style="text-align:center">@item.ReportDateFrom.ToShortDateString()</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripTimeStart)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TripTimeEnd)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.Address)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.StopDuration)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.IdlingDuration)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table><br />
+<div class="form-group" align="center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("ExcessiveIdlingDetails", new { page }))
+</div>
+
+<div class="form-group" align="left">
+    <p align="left" style="margin-top:-2rem"><strong><span style="font-size: 10pt; color:red">NOTE:</span></strong></p>
+    <p align="left" style="margin-top:-1rem"><strong><span style="font-size: 10pt;">Parking Start </span></strong> is the start time the vehicle has stop moving</p>
+    <p align="left" style="margin-top:-1rem"><strong><span style="font-size: 10pt">Parking End </span></strong> is the end time the vehicle is on stop</p>
+    <p align="left" style="margin-top:-1rem"><strong><span style="font-size: 10pt">Parking Duration </span></strong> is the total time length the vehicle is on stop</p>
+    <p align="left" style="margin-top:-1rem"><strong><span style="font-size: 10pt">Idling Duration </span></strong> is the total time length the vehicle's engine is on while on stop</p>
+</div>

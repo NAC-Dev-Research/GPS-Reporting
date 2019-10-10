@@ -1,0 +1,108 @@
+﻿@model GPSReporting.Models.NonCompliantHighlights
+<br />
+<div class="row" align="center">
+    <div class="col-lg-3" align="left">
+        <button class="btn btn-outline-primary" name="backToInput" value="YES" onclick="window.location='@Url.Action("Index", "Reports")'">Back to query page</button>
+        <button class="btn btn-outline-primary" name="detailsWindow" value="YES" onclick="window.location='ExcessiveIdlingDetails'">Details window</button>
+    </div>
+    <div class="col-lg-6" align="center">
+        <button class="btn btn-primary" type="submit" name="reportType" onclick="window.location='VehicleUsageHighlights'">Vehicle Usage</button>
+        <button class="btn btn-primary" type="submit" name="reportType" onclick="window.location='KeyTripsHighlights'">Frequently Performed Key Trips</button>
+        <button class="btn btn-primary" type="submit" name="reportType">Noncompliant Events</button>
+    </div>
+    <div class="col-lg-3" align="right">
+        <button class="btn btn-outline-danger" type="submit" name="logOut" value="YES">Log Out</button>
+        <h4 class="d-inline" style="font-weight:600; color:white">iiii</h4>
+    </div>
+</div>
+
+<br />
+<br />
+<div class="container-fluid" style="width:100%" align="center">
+    <div class="row" style="width:100%" align="center">
+        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">NONCOMPLIANT EVENTS</strong>
+        </div>
+        <div class="jumbotron" style="width:99%; height:2.5vw; border:hidden; background-color:white;">
+            <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">@ViewBag.ReportDate</strong>
+        </div>
+    </div>
+
+    <div id="Speeding">
+        <strong class="card-text" style="font-weight:600; font-size:2.5vw; color:forestgreen">Speeding violations</strong><br /><br />
+        <div class="row" style="width:100%;" align="center">
+            <div class="jumbotron" style="width:10%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Total counts</h5>
+                <strong class="card-text" style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.TotalSpeedingCount.ToString("#,##0.###")</strong>
+            </div>
+            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Vehicle with most counts</h5>
+                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.VehicleMostSpeeding</strong>
+                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.VehicleMostSpeedingCount.ToString("#,##0.###") violation(s)</h4>
+            </div>
+            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Time range with most counts</h5>
+                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.TimeRangeMostSpeeding</strong>
+                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.TimeRangeMostSpeedingCount.ToString("#,##0.###") violation(s)</h4>
+            </div>
+            <div class="jumbotron" style="width:45%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Location with most counts</h5>
+                <strong style="font-weight:600; font-size:2vw; color:forestgreen">@Model.LocationMostSpeeding</strong>
+                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.LocationMostSpeedingCount.ToString("#,##0.###") violation(s)</h4>
+            </div>
+        </div>
+    </div>
+
+    <div id="Idling">
+        <strong class="card-text" style="font-weight:600; font-size:2.5vw; color:forestgreen">Excessive idling</strong><br /><br />
+        <div class="row" style="width:100%;" align="center">
+            <div class="jumbotron" style="width:10%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Total counts</h5>
+                <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:forestgreen">@Model.TotalIdlingCount.ToString("#,##0.###")</strong>
+            </div>
+            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Vehicle with most counts</h5>
+                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.VehicleMostIdling</strong>
+                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.VehicleMostIdlingCount.ToString("#,##0.###") violation(s)</h4>
+            </div>
+            <div class="jumbotron" style="width:22%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Time range with most counts</h5>
+                <strong style="font-weight:600; font-size:3.4vw; color:forestgreen">@Model.TimeRangeMostIdling</strong>
+                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.TimeRangeMostIdlingCount.ToString("#,##0.###") violation(s)</h4>
+            </div>
+            <div class="jumbotron" style="width:45%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.3vw; color:black">Location with most counts</h5>
+                <strong style="font-weight:600; font-size:2vw; color:forestgreen">@Model.LocationMostIdling</strong>
+                <h4 style="font-weight:600; font-size:1.8vw; color:steelblue">@Model.LocationMostIdlingCount.ToString("#,##0.###") violation(s)</h4>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br /><div class="row" style="width:100%" align="left">
+        <button class="btn btn-outline-primary" type="submit" id="speedingV" name="speedingV" value="YES">Show speeding violations</button>
+    </div>
+    <div class="row" style="width:100%" align="left">
+        <button class="btn btn-outline-primary" type="submit" id="idlingV" name="idlingV" value="YES">Show excessive idling</button>
+    </div><br /><br />
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $('#Speeding').hide();
+    $('#idlingV').hide();
+    $(document).ready(function () {
+        $('#speedingV').click(function () {
+            $('#Speeding').show();
+            $('#Idling').hide();
+            $('#idlingV').show();
+            $('#speedingV').hide();
+        });
+        $('#idlingV').click(function () {
+            $('#Speeding').hide();
+            $('#Idling').show();
+            $('#idlingV').hide();
+            $('#speedingV').show();
+        });
+    });
+</script>

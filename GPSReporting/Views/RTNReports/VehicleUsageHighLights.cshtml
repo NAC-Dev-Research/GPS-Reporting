@@ -1,6 +1,147 @@
-﻿@model IEnumerable<GPSReporting.Models.TripsReportRaw>
+﻿@model GPSReporting.Models.VehicleUsageHighlights
 
-<p align="center"><strong><span style="font-size: 18pt">By Vehicle Usage</span></strong></p>
+<br />
+<div class="row" align="center">
+    <div class="col-lg-3" align="left">
+        <button class="btn btn-outline-primary" name="backToInput" value="YES" onclick="window.location='@Url.Action("Index", "Reports")'">Back to query page</button>
+        <button class="btn btn-outline-primary" name="detailsWindow" value="YES" onclick="window.location='VehicleUsageDetails'">Details window</button>
+    </div>
+    <div class="col-lg-6" align="center">
+        <button class="btn btn-primary" type="submit" name="reportType">Vehicle Usage</button>
+        <button class="btn btn-primary" type="submit" name="reportType" onclick="window.location='KeyTripsHighlights'">Frequently Performed Key Trips</button>
+        <button class="btn btn-primary" type="submit" name="reportType" onclick="window.location='NonCompliantHighlights'">Noncompliant Events</button>
+    </div>
+    <div class="col-lg-3" align="right">
+        <button class="btn btn-outline-danger" type="submit" name="logOut" value="YES">Log Out</button>
+        <h4 class="d-inline" style="font-weight:600; color:white">iiii</h4>
+    </div>
+</div>
+
+<br />
+<br />
+<div class="container-fluid" style="width:100%" align="center">
+    <div class="row" style="width:100%" align="center">
+        <div class="jumbotron" style="width:99%; height:4vw; border:hidden; background-color:white;">
+            <strong class="card-text" style="font-weight:600; font-size:3.5vw; color:black">VEHICLE USAGE</strong>
+        </div>
+    </div>
+    <div class="form-group" style="width:99%; border:hidden; background-color:white;">
+        <strong class="card-text" style="font-weight:400; font-size:1.0vw; color:black">@ViewBag.ReportDate</strong>
+    </div><br />
+    <div class="row" style="width:100%" align="center">
+        <div class="jumbotron" style="width:32%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black">Vehicle with most trips</h5>
+            <strong class="card-text" style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.VehicleMostTrips</strong>
+            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.VehicleNoOfTrips.ToString("#,##0.###") trip(s)</h4>
+        </div>
+        <div class="jumbotron" style="width:32%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black">Time range with most vehicle deployed</h5>
+            <strong style="font-weight:600; font-size:3.6vw; color:forestgreen; font-size-adjust:initial">@Model.TimeRangeMostVehicles</strong>
+            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.TimeRangeNoOfVehicles.ToString("#,##0.###") vehicle(s)</h4>
+        </div>
+        <div class="jumbotron" style="width:32%; height:12vw; border:hidden; background-color:white; border-top-color:white">
+            <h5 style="font-weight:400; font-size:1.5vw; color:black">Time range with most trips</h5>
+            <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.TimeRangeMostTrips</strong>
+            <h4 style="font-weight:600; font-size:2vw; color:steelblue">@Model.TimeRangeNoOfTrips.ToString("#,##0.###") trip(s)</h4>
+        </div>
+    </div>
+    <br /><br />
+
+    <div class="row" id="ShowMoreDetails" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="vehicleSummary" value="YES">Show more details >></button></div>
+    <div class="row" id="ShowLessDetails" style="width:100%" align="left"><button class="btn btn-outline-primary" type="submit" name="hideVehicleSummary" value="YES">Show less details <<</button></div>
+
+    <br />
+    <div class="container-fluid" id="MoreDetails" style="width:100%" align="center">
+        <div class="row" style="width:100%" align="center">
+            <div class="jumbotron" style="width:20%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.4vw; color:black">Total trips for the period</h5>
+                <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.TotalTrips.ToString("#,##0.###")</strong>
+                <h4 style="font-weight:600; font-size:1.55vw; color:steelblue">Average: @Model.AverageTrips.ToString("#,##0.###") trip(s)/day</h4>
+            </div>
+            <div class="jumbotron" style="width:24%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.4vw; color:black">Total mileage for the period</h5>
+                <strong style="font-weight:600; font-size:3.6vw; color:forestgreen; font-size-adjust:initial">@Model.TotalMileage.ToString("#,##0.###") km</strong>
+                <h4 style="font-weight:600; font-size:1.6vw; color:steelblue">Average: @Model.AverageMileage.ToString("#,##0.###") km/day</h4>
+            </div>
+            <div class="jumbotron" style="width:24%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.4vw; color:black">Total travel time for the period</h5>
+                <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.TotalTravelTime.ToString("#,##0.###") hr(s)</strong>
+                <h4 style="font-weight:600; font-size:1.6vw; color:steelblue">Average: @Model.AverageTravelTime.ToString("#,##0.###") hr/day</h4>
+            </div>
+            <div class="jumbotron" style="width:28%; height:10vw; border:hidden; background-color:white; border-top-color:white">
+                <h5 style="font-weight:400; font-size:1.4vw; color:black">Vehicles deployed for the period</h5>
+                <strong style="font-weight:600; font-size:3.6vw; color:forestgreen">@Model.VehiclesUsed.ToString("#,##0.###") vehicle(s)</strong>
+                <h4 style="font-weight:600; font-size:1.6vw; color:steelblue">@Model.VehiclesNotUsed.ToString("#,##0.###") vehicle(s) not used</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $('#MoreDetails').hide();
+    $('#ShowLessDetails').hide();
+    $(document).ready(function () {
+        $('#ShowMoreDetails').click(function () {
+            $('#MoreDetails').show();
+            $('#ShowLessDetails').show();
+            $('#ShowMoreDetails').hide();
+        });
+        $('#ShowLessDetails').click(function () {
+            $('#MoreDetails').hide();
+            $('#ShowMoreDetails').show();
+            $('#ShowLessDetails').hide();
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+@*<p align="center"><strong><span style="font-size: 18pt">By Vehicle Usage</span></strong></p>
+<table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+    <tbody>
+        <tr style="background-color:#bfffdb">
+            <td style="text-align:center" rowspan="1" colspan="12"><strong>Vehicle Usage &nbsp; ( @ViewBag.ReportDate )</strong></td>
+        </tr>
+        <tr style="background-color: #e1f2d4">
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Total trips</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Average trips</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Total Mileage</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Average mileage</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Total travel time</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Average travel time</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Vehicles used</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Vehicles not used</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Vehicle most trip</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Vehicle no of trips</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Time range most trips</strong></td>
+            <td style="text-align:center" width="8.3%" rowspan="1" colspan="1"><strong>Time range no of trips</strong></td>
+        </tr>
+                <tr>
+                    <td style="text-align:center">@Model.TotalTrips</td>
+                    <td style="text-align:center">@Model.AverageTrips</td>
+                    <td style="text-align:center">@Model.TotalMileage</td>
+                    <td style="text-align:center">@Model.AverageMileage</td>
+                    <td style="text-align:center">@Model.TotalTravelTime</td>
+                    <td style="text-align:center">@Model.AverageTravelTime</td>
+                    <td style="text-align:center">@Model.VehiclesUsed</td>
+                    <td style="text-align:center">@Model.VehiclesNotUsed</td>
+                    <td style="text-align:center">@Model.VehicleMostTrips</td>
+                    <td style="text-align:center">@Model.VehicleNoOfTrips</td>
+                    <td style="text-align:center">@Model.TimeRangeMostTrips</td>
+                    <td style="text-align:center">@Model.TimeRangeNoOfTrips</td>
+                </tr>
+    </tbody>
+</table>*@
+
+@*<p align="center"><strong><span style="font-size: 18pt">By Vehicle Usage</span></strong></p>
 <table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
     <tbody>
         <tr style="background-color:#bfffdb">
@@ -8,32 +149,103 @@
         </tr>
         <tr style="background-color: #e1f2d4">
             <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Vehicle</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Type</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Mileage</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Travel time</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Time Duration</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Start Location</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>End Location</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Stops</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Stop Duration</strong></td>
-            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Idling Duration</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Vehicle Type</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Number of trips</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Total Mileage</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average mileage</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Total travel time</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average travel time</strong></td>
         </tr>
         @{
             foreach (var item in Model)
             {
                 <tr>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.EquipmentNo)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.EquipmentType)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.TripLength)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.TripDuration)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.StartTime) - @Html.DisplayFor(m => item.EndTime)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.StartLocation)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.EndLocation)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.StopsInBetween)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.TripStopTime)</td>
-                    <td style="text-align:center">@Html.DisplayFor(m => item.TripIdlingTime)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.VehicleID)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.VehicleModel)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.NumberOfTrips)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TotalMileage)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.AverageMileage)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.TotalTravelTime)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.AverageTravelTime)</td>
                 </tr>
             }
-       }
+        }
     </tbody>
-</table>
+</table>*@
+
+@*<p align="center"><strong><span style="font-size: 18pt">By Vehicle Usage</span></strong></p>
+    <table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+        <tbody>
+            <tr style="background-color:#bfffdb">
+                <td style="text-align:center" rowspan="1" colspan="10"><strong>Vehicle Usage &nbsp; ( @ViewBag.ReportDate )</strong></td>
+            </tr>
+            <tr style="background-color: #e1f2d4">
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Vehicle</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Number of trips</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Total Mileage</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average mileage</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Total travel time</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average travel time</strong></td>
+            </tr>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TimeRange)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.NumberOfTrips)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TotalMileage)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.AverageMileage)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TotalTravelTime)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.AverageTravelTime)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>*@
+
+
+
+
+
+
+
+
+@*@model IEnumerable<GPSReporting.Models.TripsReportRaw>
+
+    <p align="center"><strong><span style="font-size: 18pt">By Vehicle Usage</span></strong></p>
+    <table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+        <tbody>
+            <tr style="background-color:#bfffdb">
+                <td style="text-align:center" rowspan="1" colspan="10"><strong>Vehicle Usage &nbsp; ( @ViewBag.ReportDate )</strong></td>
+            </tr>
+            <tr style="background-color: #e1f2d4">
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Vehicle</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Type</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Mileage</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Travel time</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Time Duration</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Start Location</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>End Location</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Stops</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Stop Duration</strong></td>
+                <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Idling Duration</strong></td>
+            </tr>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.EquipmentNo)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.EquipmentType)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TripLength)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TripDuration)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.StartTime) - @Html.DisplayFor(m => item.EndTime)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.StartLocation)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.EndLocation)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.StopsInBetween)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TripStopTime)</td>
+                        <td style="text-align:center">@Html.DisplayFor(m => item.TripIdlingTime)</td>
+                    </tr>
+                }
+           }
+        </tbody>
+    </table>*@

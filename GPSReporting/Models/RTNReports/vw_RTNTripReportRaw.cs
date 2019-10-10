@@ -15,15 +15,15 @@ namespace GPSReporting.Models.RTNReports
         public string PlateNumber { get; set; }
         public DateTime ReportDateFrom { get; set; }
         public DateTime ReportDateTo { get; set; }
-        public decimal AverageSpeed { get; set; }
-        public decimal TripLength { get; set; }
-        public decimal MaxSpeed { get; set; }
-        public decimal TravelTime { get; set; }
+        public Nullable<decimal> AverageSpeed { get; set; }
+        public Nullable<decimal> TripLength { get; set; }
+        public Nullable<decimal> MaxSpeed { get; set; }
+        public Nullable<decimal> TravelTime { get; set; }
         public string MovementStart { get; set; }
         public string MovementEnd { get; set; }
         public string StopTimeFormat { get; set; }
-        public decimal StopDuration { get; set; }
+        public Nullable<decimal> StopDuration { get; set; }
         public string IdleTimeFormat { get; set; }
-        public decimal IdleDuration { get; set; }
+        public Nullable<decimal> IdleDuration { get; set; }
     }
 }

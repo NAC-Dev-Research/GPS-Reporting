@@ -1,0 +1,53 @@
+﻿<br />
+<br />
+
+<button class="btn btn-outline-primary" name="backToMenu" value="Yes" onclick="window.location='KeyTripsHighLights'">Back to summary page</button>
+<button class="btn btn-outline-success" name="downReport" value="YES" onclick="GenerateExcel()">Download Report</button>
+
+<br />
+<br />
+<div class="row" align="center">
+    <div class="form-group" style="width:35%" align="left">
+            <button class="btn" style="color:black" disabled>Choose vehicle: </button>
+            <select class="form-control btn-outline-primary" name="chosenVehicle" id="chosenVehicle" style="width:15.2rem; height:2rem; text-align:center; display:inline;">
+                <option name="chosenVehicle" id="chosenVehicle" style="background-color:white; color:black" value="ALL">All vehicles</option>
+                            <option name="chosenVehicle" id="chosenVehicle" style="background-color:white; color:black">Option 1 - Temp 1</option>
+            </select>
+            <button class="btn btn-outline-warning" name="sortData" type="submit" value="Yes">Sort</button>
+    </div>
+    <div class="form-group" style="width:30%" align="center">
+        <p align="center"><strong><span style="font-size: 18pt">Key trips by start and end location</span></strong></p>
+    </div>
+</div>
+<table class="taskList" style="width: 98%; border-collapse: collapse" bordercolor="black" cellspacing="0" cellpadding="1" align="center" border="1">
+    <tbody>
+        <tr style="background-color:#bfffdb">
+            <td style="text-align:center" rowspan="1" colspan="8"><strong>Key Trips List</strong></td>
+        </tr>
+        <tr style="background-color: #e1f2d4">
+            <td style="text-align:center" width="26%" rowspan="1" colspan="1"><strong>Start location</strong></td>
+            <td style="text-align:center" width="26%" rowspan="1" colspan="1"><strong>End location</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Vehicle ID</strong></td>
+            <td style="text-align:center" width="6%" rowspan="1" colspan="1"><strong>Number of trips</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Average travel time, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average idling time, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="10%" rowspan="1" colspan="1"><strong>Average stop time, hh:mm:ss</strong></td>
+            <td style="text-align:center" width="8%" rowspan="1" colspan="1"><strong>Details breakdown</strong></td>
+        </tr>
+        @*@{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.StartLocation)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.EndLocation)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.VehicleID)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.NumberOfTrips)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.AverageTravelTime)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.AverageIdlingTime)</td>
+                    <td style="text-align:center">@Html.DisplayFor(m => item.AverageStopTime)</td>
+                    <td style="text-align:center">@Html.ActionLink("Go to details", "KeyTripsBreakdown", new { entryID = item.EntryID })</td>
+                </tr>
+            }
+        }*@
+    </tbody>
+</table><br />
